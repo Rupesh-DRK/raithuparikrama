@@ -1,0 +1,41 @@
+/* AdminLogin.css */
+
+.input-container {
+    position: relative;
+    margin: 2px;
+    padding: 2px;
+  }
+  
+  .custom-input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: white;
+  }
+  
+  .input-label {
+    position: absolute;
+    left: 12px;
+    top: 16px;
+    background: white;
+    padding: 0 4px;
+    transition: 0.3s;
+    color: #aaa;
+    pointer-events: none; /* Prevents label from being clicked */
+  }
+  
+  .custom-input:focus + .input-label,
+  .custom-input:not(:placeholder-shown) + .input-label {
+    top: -8px;
+    left: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #079609;
+  }
+  
+  .custom-input:focus {
+    outline: none;
+  }
+  
