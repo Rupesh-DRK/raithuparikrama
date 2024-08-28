@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import StarShow from './StarShow';
 import { useLocation } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 
@@ -15,7 +12,6 @@ const ThumbImages = ({ props }) => {
   const location = useLocation();
   const path = location.pathname.split('/')[2];
   const images = props?.profile || [];
-
   const settings = {
     dots: true,
     infinite: images.length > 1,
@@ -26,14 +22,8 @@ const ThumbImages = ({ props }) => {
     autoplaySpeed: 2000,
     arrows:true,
   };
+  const [open, setOpen] = useState(false);
 
-  const [currentImage, setCurrentImage] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(null);
-
-  const handleThumbnailClick = (image, index) => {
-    setCurrentImage(image);
-    setCurrentIndex(index);
-  };
 
   useEffect(() => {
     const fetchAverageRating = async () => {
@@ -47,47 +37,57 @@ const ThumbImages = ({ props }) => {
     fetchAverageRating();
   }, [path]);
 
-  const [open, setOpen] = useState(false);
+  const getType = (base64Url) => {
+    const matches = base64Url.match(/^data:(.*?);base64,/);
+    return matches[1];
+    }
 
   return (
     <div className=''>
-      <div className='m-auto w-75 gap-3' onClick={() => setOpen(true)}>
+      <div className='m-auto col-12 gap-3'  >
       <Slider {...settings} >
-        {props?.profile?.map((image, index) => (
-          <a
-            key={index}
-            className=" d-flex justify-content-center align-items-center w-100"
-            // href={`http://localhost:3000/backend/images/${image}`}
-            href={image}
-            onClick={(e) => {
-              e.preventDefault(); 
-              handleThumbnailClick(image, index); 
-            }}
-          >
+        {images.map((image, index) => (
+            <center onClick={() => setOpen(true)} style={{aspectRatio:'4/3',objectFit:'contain'}}>
+            { image.startsWith('data:video') ?
+            <video controls style={{aspectRatio:'4/3'}} className='rounded'>
+              <source src={image} type={getType(image)} />
+            </video> :
             <img
-            className='mt-2'
+            className='rounded-2'
               src={image}
               alt={`Thumbnail ${index}`}
-              style={{ width: "100%", height: "auto", objectFit: "contain"}}
             />
-          </a>
+            }
+          </center>
         ))}
       </Slider>
 
       </div>
 
+      {open && 
+      <div className='fullscreen col-12 h-100' >
+        <h2 className="btn btn-outline-light m-3 " style={{float:'right',fontWeight:'bolder'}} onClick={() => setOpen(false)}><i className="fa-solid fa-x"> </i></h2>
+        <center className='m-3 m-md-5 col-11 col-md-11' style={{height:'90vh',placeContent:'center'}}>
+        <Slider {...settings} > 
+          {images.map((src,index) => (
+            <center key={index} style={{aspectRatio:'4/3',objectFit:'contain',overflow:'hidden'}}>
+              { src.startsWith('data:video') ?
+            <video controls>
+              <source src={src} type={getType(src)} />
+            </video> :
+            <img
+            className='m-auto'
+              src={src}
+              alt={""}
+            />
+            }
+            </center>
+          ))}
+        </Slider>
+        </center>
 
-            {/* ratingsss */}
-      {/* <div className="text-center mt-5 d-flex">
-          <h4 className='w-50 m-auto p-1'>Ratings :<StarShow rating={averageRating} /></h4>
-      </div> */}
-      <Lightbox
-        open={open}
-        close={() => setOpen(false)}
-        slides={props?.profile?.map((image) => ({
-          src: image
-        }))}
-      />
+    </div>
+    }
     </div>
   );
 };

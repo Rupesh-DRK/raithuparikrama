@@ -153,7 +153,11 @@ const UploadProducts = () => {
     autoplaySpeed: 2000,
     arrows: true,
   };
-
+  const getType = (base64Url) => {
+    const matches = base64Url.match(/^data:(.*?);base64,/);
+    return matches[1];
+    }
+    
   return (
     <>
       <NavBar />
@@ -168,9 +172,18 @@ const UploadProducts = () => {
                 <div className='m-1 w-100'>
                   <Slider {...settings}>
                     {previews.map((preview, index) => preview && (
-                      <div key={index} className='d-flex justify-content-center align-items-center'>
-                        <img src={preview} alt={`preview-${index}`} style={{ height: 'auto', width: '90%' }} />
-                      </div>
+                      <center style={{aspectRatio:'4/3',objectFit:'contain',overflow:"hidden"}}> 
+                      { preview.startsWith('data:video') ?
+                      <video controls style={{aspectRatio:'4/3'}} className='rounded'>
+                        <source src={preview} type={getType(preview)} />
+                      </video> :
+                      <img
+                      className='rounded-2'
+                        src={preview}
+                        alt={`Thumbnail ${index}`}
+                      />
+                      }
+                    </center>
                     ))}
                   </Slider>
                 </div>

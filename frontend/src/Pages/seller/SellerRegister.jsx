@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import bgimage from '../../assets/farm.png'
 import '../../App.scss';
 import NavBar from '../../Components/NavBar';
-import Footer from '../../Components/Footer';
 
 
 const SellerRegister = () => {
@@ -24,7 +23,7 @@ const SellerRegister = () => {
     contactInformation: '',
     address: '',
     paymentInformation: '',
-    profile: file,
+    profile:'',
   });
 
 const navigate = useNavigate()
@@ -35,18 +34,17 @@ const navigate = useNavigate()
       ...prevData,
       [name]: value
     }));
-
     if (name === 'file') {
       const inputFile = files[0];
       const data = new FileReader();
       data.onload = () => {
         setFile(data.result);
-        console.log(data.result);
+        setSellerData(prevData => ({...prevData,profile:data.result}));
       }
         data.readAsDataURL(inputFile);
     }
   };
-
+console.log(sellerData)
   const handleSubmit = async (e) => {
     e.preventDefault();
     // const formData = new FormData();
@@ -63,8 +61,6 @@ const navigate = useNavigate()
     // }
     try {
       const res = await axios.post("/backend/seller/add", sellerData);
-      console.log(res.data.email);
-    
       const welcomeMessage = `Hello, ${res.data.name}.  Welcome to our website. On becoming Seller We are humbly thanking you`;
       setMessage(welcomeMessage);
 
@@ -87,7 +83,8 @@ const navigate = useNavigate()
         password: '',
         contactInformation: '',
         address: '',
-        paymentInformation: ''
+        paymentInformation: '',
+        profile: "",
       });
       navigate('/sellerlogin')
 
@@ -122,7 +119,6 @@ const navigate = useNavigate()
             <label htmlFor="img" className="form-label">
               {/* <Avatar size={150} src={file && URL.createObjectURL(file)} icon={<UserOutlined />} /> */}
               <Avatar size={150} src={file} icon={<UserOutlined />} />
-
             </label>
           </center>
         <div className="m-1">

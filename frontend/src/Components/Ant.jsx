@@ -11,7 +11,6 @@ const Ant = (props) => {
   const [swalProps, setSwalProps] = useState({});
   
   const pf = "/backend/images/";
-  console.log(pf+props.profile[0])
 
   const handleDelete = (p) => {
     setSwalProps({
@@ -58,10 +57,9 @@ const Ant = (props) => {
     <>
       <SweetAlert2 {...swalProps} />
       <Card 
-        style={{ width:190,  objectFit: 'cover',margin:'8px',padding:0 }}
+        style={{ width:190,  objectFit: 'cover',margin:'8px',padding:0,objectPosition:'center' }}
         cover={
-          <img src={props?.profile ? pf + props.profile[0] : null}  style={{ width: 200, height:"15em", objectFit: 'cover' }} />
-         
+          <img src={props?.profile ? props.profile[0] : null}  style={{ width: 200, height:"15em", objectFit: 'cover' }} />
         }
         actions={[
           <Link to={`/seller/updateProducts/${props._id}`}><EditOutlined key="edit" /></Link>,

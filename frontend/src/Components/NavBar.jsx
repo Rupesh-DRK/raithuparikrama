@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Accordion from 'react-bootstrap/Accordion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Drawer ,Badge} from 'antd';
 import { UserOutlined,ShoppingCartOutlined } from '@ant-design/icons';
@@ -10,6 +11,8 @@ import { useState } from 'react';
 import { useAuth } from '../context/Auth';
 import { useCategory } from '../middleware/Hooks';
 import { useCart } from '../context/CartContext';
+import "../App.scss"
+
 
 function NavBar() {
   const pf = "/backend/images/";
@@ -18,13 +21,14 @@ function NavBar() {
   const navigate = useNavigate();
   const [cat, setCat] = useCategory();
   const [cart, setCart] = useCart();
+  const [show,setShow] = useState(false);
 
   const showDrawer = () => {
     setOpen(true);
   };
-
   const onClose = () => {
     setOpen(false);
+    setShow(false);
   };
 
   const handleLogout = () => {
@@ -38,55 +42,74 @@ function NavBar() {
   };
 
   return (
-    <Navbar expand="lg" className=" d-block navbar p-2 m-2">
-        
-        <div className='d-flex justify-content-center w-100'><Navbar.Brand as={Link} to="/">LOGO</Navbar.Brand>  </div>
+    <Navbar expand="lg" className=" d-block navbar p-2 m-2">       
+      <div className='d-flex justify-content-center w-100'><Navbar.Brand as={Link} to="/">LOGO</Navbar.Brand>  </div>
       <div className='d-inline-flex justify-content-between w-100 fluid m-0 p-1 border-bottom'>
        <div>
-        <Navbar.Toggle aria-controls="navbarScroll m-1" />
+        <Navbar.Toggle aria-controls="navbarScroll m-1" onClick={()=> setShow(true)} />
         <Navbar.Collapse id="navbarScroll" >
+          <Nav
+            className="me-auto my-2 my-lg-0 d-none d-lg-block" 
+            style={{ maxHeight: '100px' }} >
+                 <NavDropdown className='m-2 ' 
+                 title="Menu" id="navbarScrollingDropdown" drop='down' style={{zIndex:'4000',position:'relative'}}>
+                 <NavDropdown.Item>
+                 <Nav.Link as={Link} to="/" className='scale-up m-0 rounded-2 p-1' >Home</Nav.Link> 
+                 </NavDropdown.Item>
+                 <NavDropdown className='m-2' title="Categories" id="navbarScrollingDropdown" drop='end' style={{zIndex:'4001',position:'relative'}} alignRight>
+                 <div style={{ maxHeight: '300px', overflowY: 'auto', scrollbarWidth:'auto'}}>
+                   {cat?.map(c => (
+                     <NavDropdown.Item
+                       key={c._id}
+                       onClick={() => navigate(`/category/${c._id}`)  
+                     }>
+                       <div className='btn btn-sm scale-up w-100 m-0 p-1'>
+                       {c.name}
+                       </div>
+                 </NavDropdown.Item>
+                   ))}
+                   </div>
+                 </NavDropdown> 
+                 <NavDropdown.Item ><Nav.Link as={Link} to='/#about' className='scale-up rounded-2 m-0 p-1' >About Us</Nav.Link></NavDropdown.Item>
+                 </NavDropdown> 
+          </Nav>
           <Nav
             className="me-auto my-2 my-lg-0" 
             style={{ maxHeight: '100px' }} >
-            {/* <Nav.Link as={Link} to="/index" className='scale-up' >Home</Nav.Link> */}
-            <NavDropdown className='m-2' title="Menu" id="navbarScrollingDropdown" drop='down' style={{zIndex:'4000',position:'relative'}}>
-            <NavDropdown.Item>
-            <Nav.Link as={Link} to="/index" className='scale-up m-0 rounded-2 p-1' >Home</Nav.Link> 
-            </NavDropdown.Item>
-            <NavDropdown className='m-2' title="Categories" id="navbarScrollingDropdown" drop='end' style={{zIndex:'4001',position:'relative'}} alignRight>
-            <div style={{ maxHeight: '300px', overflowY: 'auto', scrollbarWidth:'auto'}}>
-              {cat?.map(c => (
-                <NavDropdown.Item
-                  key={c._id}
-                  onClick={() => navigate(`/category/${c._id}`)  
-                }>
-                  <div className='btn btn-sm scale-up w-100 m-0 p-1'>
-                  {c.name}
-                  </div>
-            </NavDropdown.Item>
-              ))}
-              </div>
-            </NavDropdown> 
+                 <Drawer title="Menu"  onClose={onClose} open={show} placement="left" width={300} className='d-lg-none'>
+                  <div className="list-group flex-column gap-1">
+                 <Link as={Link} to="/" className='scale-up rounded-2 list-group-item' >Home</Link> 
+                 <Accordion className='m-0 p-0' defaultActiveKey="0">
+                  <Accordion.Item eventKey='1'>
+                   <Accordion.Header className='m-0 p-0 ' >Categories</Accordion.Header>
+                   <Accordion.Body className='m-0 p-0'>
+                        {cat?.map(c => (
+                          <Link
+                           key={c._id}
+                           className="list-group-item list-group-item-action p-2"
+                           onClick={() => {
+                            navigate(`/category/${c._id}`) ;
+                            setShow(false)
+                            }
+                           }>
+                           {c.name}
+                           hai
+                          </Link>
+                           ))
+                        }
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  </Accordion>
+                 <Link to='/#about' className='scale-up rounded-2 list-group-item' >About Us</Link>
 
-            <NavDropdown.Item ><Nav.Link as={Link} to='/#about' className='scale-up rounded-2 m-0 p-1' >About Us</Nav.Link></NavDropdown.Item>
-            </NavDropdown> 
-            {/* <Nav.Link as={Link} to='/#about' className='scale-up' >About Us</Nav.Link> */}
 
+                   </div>
 
+                 </Drawer>
+
+             
           </Nav>
-          {/* <SearchInput />
-          <div className="d-flex mx-3 align-items-center">
-            {auth?.user ? (
-              <>
-               {auth.user.type === 'consumer' ? <>  <Badge count={cart ? cart.length : 0} showZero >
-                   <Avatar onClick={showDrawer} icon={<UserOutlined />} src={pf + auth.user.profile} />
-                   </Badge></>:  <Avatar onClick={showDrawer} icon={<UserOutlined />} src={pf + auth.user.profile} />}
-              
-              </>
-            ) : (
-              <Button className="m-2" onClick={showDrawer}>Login</Button>
-            )}
-          </div> */}
+         
         </Navbar.Collapse>
             </div>
 
@@ -99,7 +122,7 @@ function NavBar() {
               <>
                {auth.user.type === 'consumer' ? <>  <Badge count={cart ? cart.length : 0} showZero >
                    <Avatar onClick={showDrawer} size={40} icon={<UserOutlined />} src={auth.user.profile} />
-                   </Badge></>:  <Avatar onClick={showDrawer} icon={<UserOutlined />} src={pf + auth.user.profile} />}
+                   </Badge></>:  <Avatar onClick={showDrawer} icon={<UserOutlined />} src={auth.user.profile} />}
               
               </>
             ) : (
@@ -109,7 +132,7 @@ function NavBar() {
        </div>
            
       </div>
-      <Drawer title="User"  onClose={onClose} open={open} placement="right">
+      <Drawer title="User"  onClose={onClose} open={open} placement="right" width={320}>
         <div className="offcanvas-body">
           {auth && auth.user ? (
             <div className="box d-flex flex-column list-group">

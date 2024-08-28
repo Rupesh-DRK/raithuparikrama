@@ -21,8 +21,8 @@ import AdminRoute from './routes/AdminRoutes.js';
 dotenv.config();
 
 const app = express();
-app.use(bodyParser.json({ limit: '50mb' })); // Adjust the limit as necessary
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '20mb' })); // Adjust the limit as necessary
+app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
 
 app.use(express.json());
 app.use(cors());

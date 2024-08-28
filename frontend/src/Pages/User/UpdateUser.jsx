@@ -15,36 +15,30 @@ const[auth,setAuth]=useAuth()
   const [file, setFile] = useState(null);
 
   const [updateData, setUpdateData] = useState({
-    username: '',
-    email: '',
-    Dob: '',
-    Gender: '',
-    mobile: '',
-    Alternative_mobile: '',
-    type: '',
-    password: '',
+    username: auth.user.username ,
+        email: auth.user.email ,
+        Dob: auth.user.Dob ? new Date(auth.user.Dob).toISOString().split('T')[0] : '',
+        Gender: auth.user.Gender ,
+        mobile: auth.user.mobile ,
+        Alternative_mobile: auth.user.Alternative_mobile,
+        type: auth.user.type,
+        password:auth.user.password,
+        profile: auth.user.profile,
   });
 
-  useEffect(() => {
-    if (auth.user) {
-      setUpdateData({
-        username: auth.user.username || '',
-        email: auth.user.email || '',
-        Dob: auth.user.Dob ? new Date(auth.user.Dob).toISOString().split('T')[0] : '',
-        Gender: auth.user.Gender || '',
-        mobile: auth.user.mobile || '',
-        Alternative_mobile: auth.user.Alternative_mobile || '',
-        type: auth.user.type || '',
-        password:""
-      });
-    }
-  }, [auth.user]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'file') {
-      setFile(files[0]);
-    } else {
+      const inputFile = files[0];
+      const data = new FileReader();
+      data.onload = () => {
+        setFile(data.result);
+        setUpdateData(prevData => ({...prevData,profile:data.result}))
+      }
+      data.readAsDataURL(inputFile);
+    }
+     else {
       setUpdateData(prevData => ({
         ...prevData,
         [name]: value,
@@ -55,19 +49,6 @@ const[auth,setAuth]=useAuth()
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (file) {
-      const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
-      data.append("file", file);
-
-      try {
-        await axios.post("http://localhost:5002/backend/upload", data);
-        updateData.profile= filename
-      } catch (err) {
-        console.error("File upload failed:", err);
-      }
-    }
 console.log(updateData)
     try {
       const response = await axios.put(`http://localhost:5002/backend/user/${auth.user._id}`, updateData);
@@ -94,7 +75,7 @@ console.log(updateData)
         <center>
           <Avatar
             size={150}
-            src={pf+auth.user.profile}
+            src={file || auth.user.profile || null} 
             icon={<UserOutlined />}
           />
         </center>

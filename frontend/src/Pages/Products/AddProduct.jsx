@@ -138,6 +138,10 @@ const AddProduct = () => {
     autoplaySpeed: 2000,
     arrows: true,
   };
+  const getType = (base64Url) => {
+    const matches = base64Url.match(/^data:(.*?);base64,/);
+    return matches[1];
+    }
 
   return (
     <>
@@ -150,12 +154,21 @@ const AddProduct = () => {
         <div className='d-flex flex-column justify-content-center col-12 flex-md-row'>
           <div className='preview d-flex flex-column justify-content-center align-items-center m-1 col-md-5 col-12'>
               {previews.length > 0 ? (
-          <div className='m-1 w-100' style={{ width: '30vw' }}>
+          <div className='m-1 col-12' style={{ width: '30vw' }}>
             <Slider {...settings}>
               {previews.map((preview, index) => preview && (
-                <div key={index} className='d-flex justify-content-center align-items-center'>
-                  <img src={preview} alt={`preview-${index}`} style={{ height: 'auto', width: '90%' }} />
-                </div>
+               <center style={{aspectRatio:'4/3',objectFit:'contain',overflow:"hidden"}}> 
+               { preview.startsWith('data:video') ?
+               <video controls style={{aspectRatio:'4/3'}} className='rounded'>
+                 <source src={preview} type={getType(preview)} />
+               </video> :
+               <img
+               className='rounded-2'
+                 src={preview}
+                 alt={`Thumbnail ${index}`}
+               />
+               }
+             </center>
               ))}
             </Slider>
           </div>

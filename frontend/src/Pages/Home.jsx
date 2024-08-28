@@ -81,45 +81,6 @@ const Home = () => {
       </p>
     </Container>
 
-
-    <Container id="tools" className="my-5">
-      <h2>Our Tools</h2>
-      <Row>
-        <Col md={4}>
-          <Card>
-            <Card.Img variant="top" src="https://via.placeholder.com/150" />
-            <Card.Body>
-              <Card.Title>Tool 1</Card.Title>
-              <Card.Text>
-                This is a description of tool 1. It is very effective for farming tasks.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card>
-            <Card.Img variant="top" src="https://via.placeholder.com/150" />
-            <Card.Body>
-              <Card.Title>Tool 2</Card.Title>
-              <Card.Text>
-                This is a description of tool 2. It helps in making farming easier.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card>
-            <Card.Img variant="top" src="https://via.placeholder.com/150" />
-            <Card.Body>
-              <Card.Title>Tool 3</Card.Title>
-              <Card.Text>
-                This is a description of tool 3. It increases efficiency in the field.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
     <Container className="my-5">
       <h2 className="text-center mb-4">Customer Reviews</h2>
       <Carousel interval={1000}>

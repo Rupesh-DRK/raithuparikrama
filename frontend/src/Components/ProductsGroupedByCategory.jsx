@@ -41,7 +41,7 @@ const ProductsGroupedByCategory = () => {
     {products.filter(prod => prod.category === cat._id).map((product, index) => (
       <>
       {index < 8 && (
-        <div key={index}>
+        <div key={index} className='m-1'>
         <Product props={product.id} {...product} /> 
        </div>
       )

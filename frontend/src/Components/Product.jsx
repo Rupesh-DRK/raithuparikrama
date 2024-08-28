@@ -46,13 +46,13 @@ export default function Product(props) {
  const image = props?.profile?.[0]
 
   return (
-    <div className="card container scale-up design d-flex flex-column my-3 m-2" style={{ maxWidth: '10rem'}}>
+    <div className="card container scale-up design d-flex flex-column my-3 m-md-2" style={{ maxWidth: '10rem'}}>
       <Toaster position="top-right" />
-     <div className='mx-auto p-0 ' style={{ width:'120px',height:'100px', objectFit:'contain',objectPosition:'center',overflow:'hidden'}}>
+     <div className='p-0 m-0 col-12' style={{ objectFit:'contain',objectPosition:'center',overflow:'hidden'}}>
      <img 
         // src={pf + props?.profile[0]}
         src={image}
-        className="card-img-top m-1 rounded-2 " 
+        className="card-img-top m-0 mt-1 rounded-2 p-0" 
         alt="Product" 
         style={{ width:'100%',aspectRatio:1.2/1}} 
       />

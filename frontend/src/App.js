@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Register from './Pages/Register';
 import Home from './Pages/Home';
 import Index from './Pages/Index';
@@ -39,7 +39,7 @@ import ProductForm from './Pages/Admin/ProductForm';
 
 function App() {
   const [auth, setAuth] = useAuth();
-  const location = useLocation();
+  const location = useNavigate()
   
   useEffect(() => {
     if (auth.token) {

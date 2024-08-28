@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Collapse } from "antd";
 import {  useCategory } from '../middleware/Hooks';
 import { useAuth } from '../context/Auth';
 import NavBar from "../Components/NavBar";
-import img1 from "../assets/candle.jpg"
 import Product from '../Components/Product';
 import Review from './Review';
 import ThumbImages from '../Components/ThumbImages';
 import { Button } from 'react-bootstrap';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
-import Thumbnails from '../Components/Thumbnails';
 import WhatsAppLink from '../Components/WhatsappLink';
+import { useLocation } from 'react-router-dom';
 
 
 const { Panel } = Collapse;
@@ -26,8 +24,8 @@ const SingleProduct = () => {
   const[catproducts,setCatProducts]=useState()
   const[cat,setCat]=useState()
   const [cart, setCart] = useCart();
-  const [auth, setAuth] = useAuth();
-const[category,setCategory]=useCategory()
+  const [auth] = useAuth();
+const[category]=useCategory()
   
   
 const addToCart = (post) => {
@@ -69,8 +67,6 @@ const addToCart = (post) => {
     }
    }
 
-  
-
   useEffect(() => {
     fetchData();
     fetchCat();
@@ -110,7 +106,7 @@ const addToCart = (post) => {
                   </h6>
                   <h6 className='d-flex'><div className="col-md-2 col-3">Category  </div> 
                               <h6 className='col-md-7 col-9'>
-                                    : {category?.find(c=>c._id==post.category)?.name}
+                                    : {category?.find(c=>c._id === post.category)?.name}
                               </h6>
                 </h6>
                 </Panel>
