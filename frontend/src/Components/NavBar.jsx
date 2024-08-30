@@ -81,11 +81,12 @@ function NavBar() {
                  <Link as={Link} to="/" className='scale-up rounded-2 list-group-item' >Home</Link> 
                  <Accordion className='m-0 p-0' defaultActiveKey="0">
                   <Accordion.Item eventKey='1'>
-                   <Accordion.Header className='m-0 p-0 ' >Categories</Accordion.Header>
+                   <Accordion.Header className='m-0 p-0 '>Categories</Accordion.Header>
                    <Accordion.Body className='m-0 p-0'>
                         {cat?.map(c => (
                           <Link
                            key={c._id}
+                           to={`/category/${c._id}`}
                            className="list-group-item list-group-item-action p-2"
                            onClick={() => {
                             navigate(`/category/${c._id}`) ;
@@ -93,7 +94,6 @@ function NavBar() {
                             }
                            }>
                            {c.name}
-                           hai
                           </Link>
                            ))
                         }

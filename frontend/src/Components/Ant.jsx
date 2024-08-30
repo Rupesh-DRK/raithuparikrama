@@ -10,8 +10,6 @@ const { Meta } = Card;
 const Ant = (props) => {
   const [swalProps, setSwalProps] = useState({});
   
-  const pf = "/backend/images/";
-
   const handleDelete = (p) => {
     setSwalProps({
       show: true,
@@ -59,7 +57,7 @@ const Ant = (props) => {
       <Card 
         style={{ width:190,  objectFit: 'cover',margin:'8px',padding:0,objectPosition:'center' }}
         cover={
-          <img src={props?.profile ? props.profile[0] : null}  style={{ width: 200, height:"15em", objectFit: 'cover' }} />
+          <img className='m-1 rounded scale-up' src={props?.profile ? props.profile[0] : null}  style={{ width: 180, height:"13em", objectFit: 'cover' }} />
         }
         actions={[
           <Link to={`/seller/updateProducts/${props._id}`}><EditOutlined key="edit" /></Link>,
@@ -70,7 +68,7 @@ const Ant = (props) => {
           title={props.name}
           description={(props.price).toLocaleString('en-US', {
             style: "currency",
-            currency: "USD"
+            currency: "IND"
           })}
         />
       </Card>

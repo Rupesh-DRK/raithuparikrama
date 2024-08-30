@@ -7,6 +7,7 @@ import SweetAlert2 from 'react-sweetalert2';
 import { useCategory } from '../../middleware/Hooks';
 import NavBar from '../../Components/NavBar.jsx';
 import DashboardPanel from './DashboardPanel.jsx';
+import VideoCompressor from '../Products/VideoCompressor.jsx';
 
 const UploadProducts = () => {
   const [cate] = useCategory();
@@ -54,29 +55,45 @@ const UploadProducts = () => {
     setProductData({ ...productData, profile: updatedProfile });
   };
 
-  const handleFileChange = (e, index) => {
+  const handleFileChange = async (e, index) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onloadend = () => {
-      const newFiles = [...files];
-      const newPreviews = [...previews];
-
-      newFiles[index] = file;
-      newPreviews[index] = reader.result;
-
-      setFiles(newFiles);
-      setPreviews(newPreviews);
-      setProductData(prevData => ({
-        ...prevData,
-        profile: newPreviews,
-      }));
-    };
-
     if (file) {
-      reader.readAsDataURL(file);
+      if (file.type.startsWith('video/')) {
+        try {
+          const { base64, size } = await VideoCompressor(file);
+          console.log(base64)
+          const compressedPreview = `data:video/webm;base64,${base64}`;
+          const newPreviews = [...previews];
+          newPreviews[index] = compressedPreview;
+          setPreviews(newPreviews);
+          setProductData(prevData => ({
+            ...prevData,
+            profile: newPreviews,
+          }));
+        } catch (error) {
+          console.error('Error compressing video:', error);
+        }
+      } else {
+        reader.onload = () => {
+          const newFiles = [...files];
+          const newPreviews = [...previews];
+          newFiles[index] = file;
+          newPreviews[index] = reader.result;
+
+          setFiles(newFiles);
+          setPreviews(newPreviews);
+          setProductData(prevData => ({
+            ...prevData,
+            profile: newPreviews,
+          }));
+        };
+
+        reader.readAsDataURL(file);
+      }
     }
-  };
+  }; 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -174,14 +191,17 @@ const UploadProducts = () => {
                     {previews.map((preview, index) => preview && (
                       <center style={{aspectRatio:'4/3',objectFit:'contain',overflow:"hidden"}}> 
                       { preview.startsWith('data:video') ?
-                      <video controls style={{aspectRatio:'4/3'}} className='rounded'>
+                      <video controls style={{aspectRatio:'4/3',maxHeight:'100%',maxWidth:'100%'}} className='rounded'>
                         <source src={preview} type={getType(preview)} />
                       </video> :
+                      <div className='col-12 rounded' style={{maxHeight:'45vh',objectFit:'contain',aspectRatio:'4/3'}}>
                       <img
                       className='rounded-2'
+                      style={{objectFit:'contain',maxHeight:'100%',maxWidth:'100%'}}
                         src={preview}
                         alt={`Thumbnail ${index}`}
                       />
+                      </div>
                       }
                     </center>
                     ))}

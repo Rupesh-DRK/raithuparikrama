@@ -6,6 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "yet-another-react-lightbox/styles.css";
 
+import { Skeleton } from 'antd';
+
 
 const ThumbImages = ({ props }) => {
   const [averageRating, setAverageRating] = useState(0);
@@ -19,11 +21,12 @@ const ThumbImages = ({ props }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
     arrows:true,
   };
   const [open, setOpen] = useState(false);
-
+  const [isLoading,setLoading] = useState(true);
+  
 
   useEffect(() => {
     const fetchAverageRating = async () => {
@@ -34,29 +37,46 @@ const ThumbImages = ({ props }) => {
         console.error('Failed to fetch average rating', error);
       }
     };
+    if (props.profile && props.profile.length > 0) {
+      setLoading(false);
+    }
     fetchAverageRating();
-  }, [path]);
+  }, [path,props.profile]);
 
   const getType = (base64Url) => {
     const matches = base64Url.match(/^data:(.*?);base64,/);
     return matches[1];
     }
+    
+
 
   return (
-    <div className=''>
+  <>
+    { isLoading ?  (
+      <div className='col-12' >
+      <center >
+          <Skeleton.Image active={true} />
+      </center>
+     </div>
+    ) :
+    (
+    <div className='' >
       <div className='m-auto col-12 gap-3'  >
       <Slider {...settings} >
         {images.map((image, index) => (
-            <center onClick={() => setOpen(true)} style={{aspectRatio:'4/3',objectFit:'contain'}}>
+            <center onClick={() => setOpen(true)} >
             { image.startsWith('data:video') ?
-            <video controls style={{aspectRatio:'4/3'}} className='rounded'>
+            <video controls style={{maxHeight:'45vh',objectFit:'contain',aspectRatio:'4/3'}} className='rounded-3 m-0 p-0 col-12'  onClick={()=>{setOpen(true)}}>
               <source src={image} type={getType(image)} />
             </video> :
-            <img
+            <div className='col-12 rounded' style={{maxHeight:'45vh',objectFit:'contain',aspectRatio:'4/3'}}>
+              <img
             className='rounded-2'
+            style={{objectPosition:'center',maxHeight:'100%',maxWidth:'100%'}}
               src={image}
               alt={`Thumbnail ${index}`}
             />
+            </div>
             }
           </center>
         ))}
@@ -68,15 +88,16 @@ const ThumbImages = ({ props }) => {
       <div className='fullscreen col-12 h-100' >
         <h2 className="btn btn-outline-light m-3 " style={{float:'right',fontWeight:'bolder'}} onClick={() => setOpen(false)}><i className="fa-solid fa-x"> </i></h2>
         <center className='m-3 m-md-5 col-11 col-md-11' style={{height:'90vh',placeContent:'center'}}>
-        <Slider {...settings} > 
+        <Slider {...settings} autoplay={false}> 
           {images.map((src,index) => (
-            <center key={index} style={{aspectRatio:'4/3',objectFit:'contain',overflow:'hidden'}}>
+            <center key={index} style={{aspectRatio:'4/3'}}>
               { src.startsWith('data:video') ?
-            <video controls>
+            <video controls style={{ aspectRatio: '4/3'}} className='rounded'>
               <source src={src} type={getType(src)} />
             </video> :
             <img
             className='m-auto'
+            style={{placeContent:'center',objectPosition:'center'}}
               src={src}
               alt={""}
             />
@@ -89,6 +110,8 @@ const ThumbImages = ({ props }) => {
     </div>
     }
     </div>
+    )}
+    </>
   );
 };
 

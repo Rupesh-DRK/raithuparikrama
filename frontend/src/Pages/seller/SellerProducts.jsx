@@ -1,21 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Panel from '../../Components/Panel';
-import Product from '../../Components/Product';
-import axios from 'axios';
 import Ant from '../../Components/Ant';
+import axios from 'axios';
 import { useAuth } from '../../context/Auth';
 import NavBar from '../../Components/NavBar';
+import ImageSkeleton from '../../Skeletons/ImageSkeleton';
+import ButtonSkeleton from '../../Skeletons/ButtonSkeleton';
 
 const SellerProducts = () => {
     const [dat, setDat] = useState([]);
-  const[auth,setAuth]=useAuth()
+    const [loading, setLoading] = useState(true);
+    const [auth] = useAuth();
 
     const fetchSellerProducts = async () => {
         try {
+            setLoading(true);
             const response = await axios.post("http://localhost:5002/backend/product/sellerproducts", { sellerId: auth.user._id });
             setDat(response.data);
         } catch (error) {
             console.error("Error fetching seller's products:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -25,21 +30,37 @@ const SellerProducts = () => {
 
     return (
        <>
-       <NavBar/>
+       <NavBar />
         <div className="sellerProducts">
-            <div className="row">
-                <div className="col-md-3 col-10 mx-auto"><Panel /></div>
-                <div className="col-md-8 d-flex flex-wrap col-10 mx-auto">
-                    {dat.length > 0 ? (
-                        dat.map((product) => (
-                            <Ant key={product._id} {...product}/>
+            <div className=" d-md-flex">
+                <div className="col-md-3 col-10 mx-auto">
+                    <Panel />
+                </div>
+                <div className="d-flex flex-wrap col-12 p-0 col-md-8 mx-auto">
+                    {loading ? (
+                        // Correcting array mapping for skeleton placeholders
+                        Array.from({ length: 4 }).map((_, index) => (
+                            <div className='col-6 col-md-3' key={index}>
+                                <center>
+                                    <ImageSkeleton />
+                                    <ButtonSkeleton />
+                                    <><ButtonSkeleton /><ButtonSkeleton /></>
+                                </center>
+                            </div>
                         ))
                     ) : (
-                        <p>No products found</p>
+                        dat.length > 0 ? (
+                            dat.map((product) => (
+                                <Ant key={product._id} {...product} />
+                            ))
+                        ) : (
+                            'No Products Uploaded by YOU'
+                        )
                     )}
                 </div>
             </div>
-        </div></>
+        </div>
+       </>
     );
 };
 

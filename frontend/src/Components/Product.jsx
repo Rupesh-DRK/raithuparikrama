@@ -14,6 +14,7 @@ export default function Product(props) {
   const [averageRating, setAverageRating] = useState(0);
   const location = useLocation();
   
+  
   useEffect(() => {
     const fetchAverageRating = async () => {
       try {
@@ -43,8 +44,13 @@ export default function Product(props) {
   const productLink = `${window.location.origin}/product/${props._id}`;
 
   const message = `Check out this product: ${props.name}\nPrice: $${props.price}\n${productLink}`;
- const image = props?.profile?.[0]
+  const imageIndex = () => {
+    return props.profile.findIndex(item => item.startsWith('data:image'));
+  };
+ const image = props?.profile?.[imageIndex()]
 
+
+ 
   return (
     <div className="card container scale-up design d-flex flex-column my-3 m-md-2" style={{ maxWidth: '10rem'}}>
       <Toaster position="top-right" />

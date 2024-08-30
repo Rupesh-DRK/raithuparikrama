@@ -19,7 +19,6 @@ import Page from './Pages/Page';
 import SearchResults from './Pages/SearchResults';
 import CartPage from './Pages/CartPage';
 import UpdateUser from './Pages/User/UpdateUser';
-import AddUserAddress from './Pages/User/AddUserAddress';
 import CategoryPage from './Pages/seller/CategoryPage';
 import { useAuth } from './context/Auth';
 import {jwtDecode} from 'jwt-decode';
@@ -33,6 +32,7 @@ import AllOrders from './Pages/Admin/AllOrders';
 import UploadProducts from './Pages/Admin/UploadProducts';
 import AddCategory from './Pages/Admin/AddCategory';
 import ProductForm from './Pages/Admin/ProductForm';
+import AllSkeletons from './Skeletons/AllSkeletons';
 
 
 
@@ -98,7 +98,6 @@ console.log(Date.now())
       <Route path="/user" element={<UserRoutes />}>
           <Route path="/user/cart" element={<CartPage />} />
           <Route path="/user/UpdateUser" element={<UpdateUser />} />
-          <Route path="/user/AddUserAddress" element={<AddUserAddress />} />
       </Route>
       <Route path="/seller" element={<PrivateRoute />}>
           <Route path="/seller/add" element={<AddProduct />} />
@@ -126,6 +125,7 @@ console.log(Date.now())
         <Route path='/admin/cate' element={ <AddCategory /> } />
         <Route path='/admin/newForm' element={<ProductForm />} />
       </Route>
+      <Route path='/skel' element={<AllSkeletons />} />
 
     </Routes>
     </div>
