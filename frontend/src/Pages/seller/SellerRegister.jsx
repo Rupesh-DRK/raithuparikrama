@@ -44,31 +44,14 @@ const navigate = useNavigate()
         data.readAsDataURL(inputFile);
     }
   };
-console.log(sellerData)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // if (file) {
-    //   const filename = Date.now() + file.name;
-    //   formData.append("name", filename);
-    //   formData.append("file", file);
-    //   try {
-    //     await axios.post("http://localhost:5002/backend/upload", formData);
-    //     sellerData.profile = filename;
-    //   } catch (err) {
-    //     console.error('Error uploading file:', err);
-    //   }
-    // }
+    
     try {
       const res = await axios.post("/backend/seller/add", sellerData);
       const welcomeMessage = `Hello, ${res.data.name}.  Welcome to our website. On becoming Seller We are humbly thanking you`;
       setMessage(welcomeMessage);
 
-      // await axios.post("http://localhost:5002/backend/Mail/send-email", {
-      //   to: res.data.email,
-      //   subject,
-      //   text: welcomeMessage 
-      // });
       setSwalProps({
         show: true,
         icon: 'success',
@@ -89,7 +72,6 @@ console.log(sellerData)
       navigate('/sellerlogin')
 
     } catch (err) {
-      console.error('Error adding seller:', err);
       toast.error("Failed to add seller");
     }
   };

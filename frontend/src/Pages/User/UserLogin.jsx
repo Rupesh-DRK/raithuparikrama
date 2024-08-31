@@ -23,7 +23,7 @@ const UserLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5002/backend/user/login", {
+            const res = await axios.post( "/backend/user/login", {
                 email: userRef.current.value,
                 password: passwordRef.current.value,
             });

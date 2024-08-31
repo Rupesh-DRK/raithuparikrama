@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Accordion from 'react-bootstrap/Accordion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Drawer ,Badge} from 'antd';
-import { UserOutlined,ShoppingCartOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import SearchInput from './SearchInput';
 import { useState } from 'react';
 import { useAuth } from '../context/Auth';
@@ -138,7 +138,6 @@ function NavBar() {
             <div className="box d-flex flex-column list-group">
               <center>
                 <Avatar src={auth.user.profile} size={100} icon={<UserOutlined />} />
-                {/* {console.log(pf + auth.user.profile)} */}
                 <p>{auth.user.name || auth.user.username}</p>
               </center>
               

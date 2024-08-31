@@ -22,7 +22,7 @@ const Ant = (props) => {
       cancelButtonText: 'No, keep it',
       reverseButtons: true,
       preConfirm: () => {
-        return axios.delete(`http://localhost:5002/backend/product/${p}`)
+        return axios.delete( `/backend/product/${p}`)
           .then(() => {
             setSwalProps({
               show: true,

@@ -78,7 +78,6 @@ const CartPage = () => {
             return ` Name : ${item.name} \n Price : ${item.price} \n Product url : ${'http://localhost:3000/product/'+item._id} \n`
    }).join(' ')
 };
-console.log(cart)
 
   return (
     <> 
@@ -98,7 +97,7 @@ console.log(cart)
           {cart?.map(p => (
             <div className=" card flex-row m-1 flex-md-column col-md-3 col-lg-2 m-2 scale-up design" key={p._id}>
               <div className="col-4 col-md-12 p-0 mt-1">
-                <img className='d-flex align-self-center' src={p.profile ? `http://localhost:5002/backend/images/${p?.profile?.[0]}` : img1} width={200} alt="img" />
+                <img className='d-flex align-self-center' src={p.profile ?  `/backend/images/${p?.profile?.[0]}` : img1} width={200} alt="img" />
               </div>
               <div className="col-8 col-md-12 p-0 gap-0 text-md-center">
               <h4 className='m-1'><Link to={`/product/${p._id}`} >{(p.name).substring(0, 14) + "...."}</Link></h4>

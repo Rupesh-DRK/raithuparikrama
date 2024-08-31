@@ -10,7 +10,7 @@ const SearchInput = () => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const { data } = await axios.get(`http://localhost:5002/backend/product/search/${values.keyword}`);
+            const { data } = await axios.get( `/backend/product/search/${values.keyword}`);
             setValues({ ...values, results: data });
             navigate("/search");
         } catch (err) {

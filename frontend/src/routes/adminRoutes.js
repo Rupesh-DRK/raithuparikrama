@@ -11,7 +11,7 @@ export default function AdminRoutes() {
 
   useEffect(() => {
     const authCheck = async () => {
-      const res = await axios.get("http://localhost:5002/backend/admin/admin-auth");
+      const res = await axios.get( "/backend/admin/admin-auth");
 
       if (res.data.ok) {
         setOk(true);

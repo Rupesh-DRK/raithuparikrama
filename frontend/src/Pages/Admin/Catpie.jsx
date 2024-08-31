@@ -6,7 +6,7 @@ import { useCategory } from '../../middleware/Hooks';
 const Catpie = () => {
     const [categoryCount, setCategoryCount] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
-    const [displayLabels, setDisplayLabels] = useState(true); // State to toggle label display
+    const [displayLabels, setDisplayLabels] = useState(true); 
     const chartRef = useRef(null);
     const [category, setCategory] = useCategory();
 
@@ -18,7 +18,7 @@ const Catpie = () => {
         if (categoryCount.length > 0 && category.length > 0) {
             createChart();
         }
-    }, [categoryCount, category, displayLabels]); // Recreate chart when labels toggle
+    }, [categoryCount, category, displayLabels]);
 
     const fetchData = async () => {
         try {
@@ -64,7 +64,7 @@ const Catpie = () => {
             chartRef.current.chart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: displayLabels ? categoryNames : [], // Conditionally show labels
+                    labels: displayLabels ? categoryNames : [],
                     datasets: [{
                         data: categoryCount.map(category => category.count),
                         backgroundColor: backgroundColors
@@ -73,7 +73,7 @@ const Catpie = () => {
                 options: {
                     plugins: {
                         legend: {
-                            display: displayLabels // Conditionally display legend
+                            display: displayLabels 
                         }
                     }
                 }

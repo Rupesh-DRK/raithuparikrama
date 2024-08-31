@@ -25,7 +25,6 @@ const UpdateSeller = () => {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'file') {
-      console.log(files[0])
       const inputFile = files[0]
       const data = new FileReader();
       data.onload = () => {
@@ -40,18 +39,14 @@ const UpdateSeller = () => {
         [name]: value
       }));
     }
-    console.log(updateData)
 
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
-      const response = await axios.put("http://localhost:5002/backend/seller/" + auth.user._id, updateData);
-      
+      const response = await axios.put( "/backend/seller/" + auth.user._id, updateData); 
       toast.success("Updated successfully");
-     
-    // Update auth in state and localStorage
     const newAuth = { ...auth, user: response.data };
     setAuth(newAuth);
     localStorage.setItem('auth', JSON.stringify(newAuth));
@@ -72,7 +67,6 @@ const UpdateSeller = () => {
         <center>
           <Avatar 
             size={150} 
-            // src={file ? URL.createObjectURL(file) : (auth.user.profile ? auth.user.profile : null)} 
             src={file || auth.user.profile || null} 
             icon={<UserOutlined />} 
           />

@@ -63,7 +63,6 @@ const UploadProducts = () => {
       if (file.type.startsWith('video/')) {
         try {
           const { base64, size } = await VideoCompressor(file);
-          console.log(base64)
           const compressedPreview = `data:video/webm;base64,${base64}`;
           const newPreviews = [...previews];
           newPreviews[index] = compressedPreview;
@@ -137,7 +136,6 @@ const UploadProducts = () => {
 
     try {
       const response = await axios.post("/backend/product/addProduct", productData);
-      console.log('Product added successfully:', response.data);
       setSwalProps({
         show: true,
         icon: 'success',
@@ -157,7 +155,6 @@ const UploadProducts = () => {
         text: 'Error adding product',
       });
     }
-    console.log(productData.profile);
   };
 
   const settings = {

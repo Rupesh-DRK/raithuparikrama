@@ -19,7 +19,7 @@ const CategoryProducts = () => {
     const fetchCat = async () => {
         try {
             setIsLoading(true);
-            const response = await axios.get(`http://localhost:5002/backend/product/category/${path}`);
+            const response = await axios.get( `/backend/product/category/${path}`);
             setCatProducts(response.data);
             setIsLoading(false);
         } catch (error) {

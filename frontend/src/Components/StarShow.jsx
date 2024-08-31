@@ -1,4 +1,3 @@
-// src/components/StarRating.js
 import React from 'react';
 
 const StarShow = ({ rating }) => {

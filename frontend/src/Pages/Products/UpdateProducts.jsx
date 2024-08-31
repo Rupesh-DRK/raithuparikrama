@@ -34,14 +34,14 @@ const UpdateProducts = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const productResponse = await axios.get(`http://localhost:5002/backend/product/${path}`);
+                const productResponse = await axios.get( `/backend/product/${path}`);
                 setProduct(productResponse.data);
                 
                 if (productResponse.data.profile) {
                     setPreviews(productResponse.data.profile.map(file => `${pf}${file}`));
                 }
 
-                const sellerResponse = await axios.post('http://localhost:5002/backend/seller/sel', { _id: productResponse.data.seller });
+                const sellerResponse = await axios.post( '/backend/seller/sel', { _id: productResponse.data.seller });
                 setSellerData(sellerResponse.data);
 
                 setUpdateData(prevData => ({
@@ -105,7 +105,7 @@ const UpdateProducts = () => {
 
         if (filenames.length > updateData.profile.length) {
             try {
-                await axios.post("http://localhost:5002/backend/uploads", formData);
+                await axios.post( "/backend/uploads", formData);
                 
             } catch (err) {
                 console.error("File upload failed:", err);
@@ -114,7 +114,7 @@ const UpdateProducts = () => {
         }
 
         try {
-            await axios.put(`http://localhost:5002/backend/product/${path}`, {
+            await axios.put( `/backend/product/${path}`, {
                 ...updateData,
                 profile: filenames
             });

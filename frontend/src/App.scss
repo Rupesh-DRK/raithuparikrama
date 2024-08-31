@@ -141,17 +141,12 @@
 .scale-up:hover{
   scale: 1.05;
   transition:all ease-in-out 0.3s;
-  // filter: drop-shadow(-1px 3px 1px rgb(0, 0, 0));
 }
 .design:hover{
-  // background: #afc8ec97; 
   background-color: rgba(111, 220, 136, 0.893);
   box-shadow: inset -2px -2px 5px rgba(253,253,253)  ,  -3px -3px 7px #ffffffb2,  2px 2px 5px rgba(94, 104, 121, 0.945);  
 }
 
-// *{
-//   border: 1px solid rgb(36, 0, 239);
-// }
 
 .form-group{
   margin: 1px;

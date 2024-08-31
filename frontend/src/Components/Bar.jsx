@@ -109,7 +109,6 @@ export default function Bar() {
 
       <div className="d-flex justify-content-center flex-wrap m-3">
         {isLoading ? (
-          // Render skeletons based on the number of products expected
           [...Array(4)]?.map((_, index) => (
             <ProductSkeleton key={index} />
           ))

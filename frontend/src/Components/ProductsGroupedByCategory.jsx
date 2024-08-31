@@ -14,7 +14,6 @@ const ProductsGroupedByCategory = () => {
     try {
       const product = await axios.get('/backend/product/getProducts');
       setProducts(product.data);
-    //   console.log(product.data);
     } catch (error) {
       setError(error.message);
     }

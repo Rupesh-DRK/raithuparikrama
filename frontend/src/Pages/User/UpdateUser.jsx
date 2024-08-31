@@ -9,7 +9,7 @@ import { UserOutlined } from '@ant-design/icons';
 import NavBar from '../../Components/NavBar';
 
 const UpdateUser = () => {
-  const pf = "http://localhost:5002/backend/images/";
+  const pf =  "/backend/images/";
   const navigate = useNavigate();
 const[auth,setAuth]=useAuth()
   const [file, setFile] = useState(null);
@@ -49,12 +49,10 @@ const[auth,setAuth]=useAuth()
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-console.log(updateData)
     try {
-      const response = await axios.put(`http://localhost:5002/backend/user/${auth.user._id}`, updateData);
+      const response = await axios.put( `/backend/user/${auth.user._id}`, updateData);
       toast.success("Updated successfully");
      
-    // Update auth in state and localStorage
     const newAuth = { ...auth, user: response.data };
     setAuth(newAuth);
     localStorage.setItem('auth', JSON.stringify(newAuth));
@@ -65,7 +63,6 @@ console.log(updateData)
       toast.error(err);
     }
   };
-{console.log(auth.user.profile)}
   return (<>
       <NavBar />
     <div className="container m-1 d-flex flex-column col-12 mx-auto col-md-6">

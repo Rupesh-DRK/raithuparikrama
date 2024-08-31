@@ -16,7 +16,7 @@ const SellerApproval = () => {
 
     useEffect(() => {
         fetchSellers();
-    }, []); // Adding an empty dependency array to run only once when the component mounts
+    }, []); 
 
     const disapproveSeller = async (id) => {
         

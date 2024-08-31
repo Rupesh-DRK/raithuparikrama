@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 const AllOrders = () => {
     const [orders, setOrders] = useState([]);
 
-    // Function to fetch orders from the backend
     const fetchOrders = async () => {
         try {
             const result = await axios.get("/backend/admin/orders");
@@ -14,7 +13,6 @@ const AllOrders = () => {
         }
     };
 
-    // UseEffect to fetch orders when the component mounts
     useEffect(() => {
         fetchOrders();
     }, []);
@@ -36,11 +34,11 @@ const AllOrders = () => {
                     <tbody>
                         {orders.map((order, index) => (
                             <tr key={order._id}>
-                                <td>{index + 1}</td> {/* Index to display row number */}
-                                <td>{order.status}</td> {/* Status of the order */}
-                                <td>{order.payment.transactionId}</td> {/* Transaction ID */}
-                                <td>{order.payment.method}</td> {/* Payment method */}
-                                <td>${order.payment.amount}</td> {/* Payment amount */}
+                                <td>{index + 1}</td> 
+                                <td>{order.status}</td> 
+                                <td>{order.payment.transactionId}</td>
+                                <td>{order.payment.method}</td>
+                                <td>${order.payment.amount}</td>
                             </tr>
                         ))}
                     </tbody>

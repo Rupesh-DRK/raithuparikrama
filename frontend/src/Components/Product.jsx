@@ -56,7 +56,6 @@ export default function Product(props) {
       <Toaster position="top-right" />
      <div className='p-0 m-0 col-12' style={{ objectFit:'contain',objectPosition:'center',overflow:'hidden'}}>
      <img 
-        // src={pf + props?.profile[0]}
         src={image}
         className="card-img-top m-0 mt-1 rounded-2 p-0" 
         alt="Product" 

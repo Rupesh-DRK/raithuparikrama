@@ -36,7 +36,6 @@ const UserReg = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const formData = new FormData();
     const userData = {
       username: usernameRef.current.value,
       email: emailRef.current.value,
@@ -48,24 +47,16 @@ const UserReg = () => {
       profile:file,
     };
 
-console.log(userData)
     try {
       const res = await axios.post('/backend/admin/register', userData);
-      console.log(res.data.email)
       
       const welcomeMessage = `Hello, ${res.data.username}.  Welcome to our website. On becoming a part of out community, We are humbly thanking you`;
       setMessage(welcomeMessage);
 
-      // await axios.post("http://localhost:5002/backend/Mail/send-email", {
-      //   to: res.data.email,
-      //   subject,
-      //   text: welcomeMessage 
-      // });
       Swal.fire('Success', 'Admin added successfully', 'success');
       navigate("/admin/login");
       resetForm();
     } catch (error) {
-      console.error('Registration failed:', error.response || error.message);
       Swal.fire('Error', 'Registration failed', 'error');
     }
   };
@@ -88,7 +79,6 @@ console.log(userData)
         <div className="mb-3">
           <center className='m-3'>
             <label htmlFor="img" className="form-label">
-              {/* <Avatar size={150} src={file && URL.createObjectURL(file)} icon={<UserOutlined />} /> */}
               <Avatar size={150} src={file} icon={<UserOutlined />} />
             </label>
           </center>
@@ -97,7 +87,6 @@ console.log(userData)
             type="file"
             name="file"
             id="img"
-            // ref={fileInputRef}
             onChange={handleFileChange}
           />
         </div>

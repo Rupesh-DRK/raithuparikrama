@@ -21,7 +21,6 @@ const Userpie = () => {
             const resp = await axios.get("/backend/counter/getUsers");
             const data = resp.data.results;
             setResult(data);
-            console.log("Fetched data:", data);
         } catch (error) {
             console.log(error);
         }

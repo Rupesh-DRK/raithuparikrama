@@ -46,7 +46,6 @@ function App() {
       const token = auth.token;
       const decodedToken = jwtDecode(token);
       const expirationTime = decodedToken.exp * 1000; // Convert to milliseconds
-      // const expirationTime = Date.now() + 15 * 60 * 1000;
       localStorage.setItem('token', token);
       localStorage.setItem('tokenExpiration', expirationTime);
 
@@ -85,7 +84,6 @@ function App() {
       return () => clearInterval(intervalId);
     }
   }, [auth.token]);
-console.log(Date.now())
   return (
     <div className='app'>
       <Routes>

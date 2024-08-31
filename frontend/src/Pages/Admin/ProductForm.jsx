@@ -120,7 +120,6 @@ const ProductForm = () => {
 
     try {
       const response = await axios.post("/backend/product/addProduct", productData);
-      console.log('Product added successfully:', response.data);
       setSwalProps({
         show: true,
         icon: 'success',
@@ -128,7 +127,6 @@ const ProductForm = () => {
         text: 'Product added successfully',
       });
 
-      // Reset form fields and state
       setProductData({
         name: '',
         description: '',
@@ -153,7 +151,6 @@ const ProductForm = () => {
         text: 'Error adding product',
       });
     }
-    console.log(productData.profile);
   };
 
   const settings = {

@@ -15,7 +15,7 @@ const SellerProducts = () => {
     const fetchSellerProducts = async () => {
         try {
             setLoading(true);
-            const response = await axios.post("http://localhost:5002/backend/product/sellerproducts", { sellerId: auth.user._id });
+            const response = await axios.post( "/backend/product/sellerproducts", { sellerId: auth.user._id });
             setDat(response.data);
         } catch (error) {
             console.error("Error fetching seller's products:", error);
@@ -38,7 +38,6 @@ const SellerProducts = () => {
                 </div>
                 <div className="d-flex flex-wrap col-12 p-0 col-md-8 mx-auto">
                     {loading ? (
-                        // Correcting array mapping for skeleton placeholders
                         Array.from({ length: 4 }).map((_, index) => (
                             <div className='col-6 col-md-3' key={index}>
                                 <center>

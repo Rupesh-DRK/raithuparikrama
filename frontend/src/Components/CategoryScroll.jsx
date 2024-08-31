@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useCategory } from '../middleware/Hooks';
 import { useNavigate } from 'react-router-dom';
 import bomma from "../assets/farm.png";
-import AvatarSkeleton from '../Skeletons/AvatarSkeleton'; // Assume this skeleton exists
-import ButtonSkeleton from '../Skeletons/ButtonSkeleton'; // Assume this skeleton exists
+import AvatarSkeleton from '../Skeletons/AvatarSkeleton'; 
+import ButtonSkeleton from '../Skeletons/ButtonSkeleton'; 
 
 const CategoryScroll = () => {
     const [category, setCategory] = useCategory();

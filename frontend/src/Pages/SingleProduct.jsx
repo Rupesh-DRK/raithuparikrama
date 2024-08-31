@@ -50,7 +50,7 @@ const SingleProduct = () => {
 
   const fetchData = async () => {
     try {
-      const productResponse = await axios.get(`http://localhost:5002/backend/product/${path}`);
+      const productResponse = await axios.get( `/backend/product/${path}`);
       setPost(productResponse.data);
       setCat(productResponse.data.category);
       setIsLoading(false);
@@ -63,7 +63,7 @@ const SingleProduct = () => {
   const fetchCat = async () => {
     try {
       setProductLoading(true); 
-      const response = await axios.get(`http://localhost:5002/backend/product/category/${cat}`);
+      const response = await axios.get( `/backend/product/category/${cat}`);
       setCatProducts(response.data);
       setProductLoading(false); 
     } catch (error) {
@@ -95,7 +95,15 @@ const SingleProduct = () => {
             <center><ImageSkeleton /></center>
           </div>
           <div className="col-12 col-md-6 rounded" style={{aspectRatio:'4/3',placeContent:'center',maxHeight:'48vh'}} >
-            <center><DotSkeleton /> </center>
+            <center>
+              <ButtonSkeleton/>
+              <ButtonSkeleton/>
+              <ButtonSkeleton/>
+              <ButtonSkeleton/>
+              <ButtonSkeleton/>
+              <ButtonSkeleton/>
+
+             </center>
           </div>
          </div>
          <div className="col-12 mt-3">

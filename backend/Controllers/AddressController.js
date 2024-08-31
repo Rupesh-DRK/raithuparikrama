@@ -70,12 +70,10 @@ export const deleteAddress = async (req, res) => {
     if (!userAddress) {
       return res.status(404).json({ message: "User not found." });
     }
-    console.log(userAddress)
 
     // Find the index of the address to delete
     const addressIndex = userAddress.UserAddresses.find(address => address._id === addressId);
 
-    console.log(addressIndex)
 
     if (addressIndex === -1) {
       return res.status(404).json({ message: "Address not found." });
@@ -89,7 +87,6 @@ export const deleteAddress = async (req, res) => {
 
     res.status(200).json({ message: "Address deleted successfully" });
   } catch (error) {
-    console.error('Error deleting address:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -119,7 +116,6 @@ const axiosInstance = axios.create({
             res.status(404).json({ error: 'Pincode not found' });
         }
     } catch (error) {
-        console.error('Error fetching pincode data:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
@@ -160,7 +156,6 @@ export const getAllAddress = async (req, res) => {
         }
         res.status(200).send(addresses.UserAddresses);
     } catch (error) {
-        console.error(error);
         res.status(500).send({ message: "Server error", error });
     }
 };

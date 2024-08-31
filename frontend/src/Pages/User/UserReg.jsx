@@ -7,7 +7,6 @@ import { UserOutlined } from '@ant-design/icons';
 import NavBar from '../../Components/NavBar';
 
 const UserReg = () => {
-  // const fileInputRef = useRef(null);
   const usernameRef = useRef('');
   const emailRef = useRef('');
   const dobRef = useRef('');
@@ -26,7 +25,6 @@ const UserReg = () => {
       const data = new FileReader();
       data.onload = () => {
         setFile(data.result);
-        console.log(data.result);
       }
       if(inputFile){
         data.readAsDataURL(inputFile);
@@ -48,39 +46,13 @@ const UserReg = () => {
       password: passwordRef.current.value,
       profile:file,
     };
-    console.log(userData)
    
-
-    // if (file) {
-    //   const filename = Date.now() + file.name;
-    //   formData.append("name", filename);
-    //   formData.append("file", file);
-    //   try {
-    //     await axios.post("http://localhost:5002/backend/upload", formData);
-    //     userData.profile = filename;
-    //   } catch (err) {
-    //     console.error('Error uploading file:', err);
-    //     Swal.fire('Error', 'File upload failed', 'error');
-    //     return;
-    //   }
-    // }
 
     try {
       const res = await axios.post('/backend/user/register', userData);
-      console.log(res.data.email)
       
-      const welcomeMessage = `Hello, ${res.data.username}.  Welcome to our website. On becoming a part of out community, We are humbly thanking you`;
-      setMessage(welcomeMessage);
-
-      // await axios.post("http://localhost:5002/backend/Mail/send-email", {
-      //   to: res.data.email,
-      //   subject,
-      //   text: welcomeMessage 
-      // });
-      Swal.fire('Success', 'User added successfully', 'success');
       resetForm();
     } catch (error) {
-      console.error('Registration failed:', error.response || error.message);
       Swal.fire('Error', 'Registration failed', 'error');
     }
   };
@@ -93,7 +65,6 @@ const UserReg = () => {
     mobileRef.current.value = '';
     alternativeMobileRef.current.value = '';
     passwordRef.current.value = '';
-    // fileInputRef.current.value = '';
     setFile(null);
   };
 
@@ -107,7 +78,6 @@ const UserReg = () => {
           <center className='m-3'>
             <label htmlFor="img" className="form-label">
               <Avatar size={150} src={file} icon={<UserOutlined />} />
-              {/* <Avatar size={150} src={file && URL.createObjectURL(file)} icon={<UserOutlined />} /> */}
             </label>
           </center>
           <input
@@ -115,7 +85,6 @@ const UserReg = () => {
             type="file"
             name="file"
             id="img"
-            // ref={fileInputRef}
             onChange={handleChange}
           />
         </div>

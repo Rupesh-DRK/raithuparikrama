@@ -17,10 +17,8 @@ export default function Index() {
     try {
       const response = await axios.get(`/backend/product/random?page=${page}&limit=5`);
       const newProducts = response.data.products;
-      console.log(newProducts);
       setProducts(() => [ ...newProducts]);
       setHasMore(newProducts.length > 0);
-     
     } catch (error) {
       console.error('Error fetching products:', error);
     }

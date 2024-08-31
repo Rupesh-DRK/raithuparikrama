@@ -1,4 +1,3 @@
-// src/components/LandingPage.js
 import React from 'react';
 import { Container, Button, Carousel,Card, Row, Col } from 'react-bootstrap';
 import NavBar from "../Components/NavBar"
@@ -67,10 +66,8 @@ const Home = () => {
           </Container>
         </Carousel.Caption>
       </Carousel.Item>
-      {/* Add more Carousel.Items for additional images */}
     </Carousel>
     </div>
-    {/* <ProductsGroupedByCategory /> */}
     <CategoryScroll />
     <Bar />
 
