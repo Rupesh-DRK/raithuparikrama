@@ -6,7 +6,7 @@ import AvatarSkeleton from '../Skeletons/AvatarSkeleton';
 import ButtonSkeleton from '../Skeletons/ButtonSkeleton'; 
 
 const CategoryScroll = () => {
-    const [category, setCategory] = useCategory();
+    const [category] = useCategory();
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 

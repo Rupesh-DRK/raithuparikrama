@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from '../Components/NavBar'
 import "../App.scss"
-import Bar from '../Components/Bar'
 import CategoryScroll from '../Components/CategoryScroll'
 import CarouselWithContent from '../Components/CarouselWithContent'
 import axios from 'axios'
@@ -40,7 +39,6 @@ export default function Index() {
     </div>
     <ProductsGroupedByCategory />
 
-    {/* <Bar/> */}
     
    
     </div>

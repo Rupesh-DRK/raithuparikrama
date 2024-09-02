@@ -26,15 +26,10 @@ export const loginUser = async (req, res) => {
 
     try {
         const user = await User.findOne({ email });
-
         if (!user || password !== user.password) {
             return res.status(400).json({ error: "Invalid email or password" });
         }
-
-        // Generate JWT token
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SEC, { expiresIn: '20m' });
-
-        // Remove password from user data
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SEC, { expiresIn: '24h' });
         const { password: _, ...userData } = user.toObject();
 
         // Return user data and token in response
@@ -49,16 +44,12 @@ export const loginUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const {id}  = req.params;
-    console.log('User ID:', id);
-    console.log('Request Body:', req.body);
-    
+    const {id}  = req.params;    
     const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
     if (!updatedUser) {
       return res.status(404).json({  ID:id,
         message: 'User not found' });
     }
-
     res.json(updatedUser);
   } catch (error) {
     console.error(error);

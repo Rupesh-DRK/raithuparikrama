@@ -73,7 +73,7 @@ const UserReg = () => {
   };
 
   return (
-    <div className="container mt-5 w-25 border rounded">
+    <div className="container mt-5 col-12 border rounded">
       <h1 className="mb-4">User Registration</h1>
       <form onSubmit={handleSubmit} className="needs-validation" noValidate>
         <div className="mb-3">
@@ -176,8 +176,10 @@ const UserReg = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-success w-50 ">Sign Up</button>
-        <button type="reset" className="btn btn-warning w-50" onClick={resetForm}>Reset</button>
+        <center>
+        <button type="submit" className="btn btn-sm btn-success m-2">Sign Up</button>
+        <button type="reset" className="btn btn-sm btn-warning m-2" onClick={resetForm}>Reset</button>
+        </center>
       </form>
     </div>
   );

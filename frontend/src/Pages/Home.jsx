@@ -62,7 +62,7 @@ const Home = () => {
           <Container className='shadd'>
             <h1 style={{fontSize:'3.4vw'}}>Welcome to Farming Tools</h1>
             <p className='d-none d-md-block' style={{fontSize:'1.2vw'}} >Your one-stop solution for the best farming equipment</p>
-            <Button variant="outline-light" href="#tools" className=' btn-sm btn-md'>Explore Tools</Button>
+            <Button variant="outline-light" href="/index" className=' btn-sm btn-md'>Explore Tools</Button>
           </Container>
         </Carousel.Caption>
       </Carousel.Item>

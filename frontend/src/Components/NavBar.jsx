@@ -12,6 +12,7 @@ import { useAuth } from '../context/Auth';
 import { useCategory } from '../middleware/Hooks';
 import { useCart } from '../context/CartContext';
 import "../App.scss"
+import Logo from "../assets/logo.png"
 
 
 function NavBar() {
@@ -43,36 +44,53 @@ function NavBar() {
 
   return (
     <Navbar expand="lg" className=" d-block navbar p-2 m-2">       
-      <div className='d-flex justify-content-center w-100'><Navbar.Brand as={Link} to="/">LOGO</Navbar.Brand>  </div>
+      <div className='d-flex justify-content-center w-100'><Navbar.Brand as={Link} to="/"><div className='logo ms-4' style={{width:'200px'}}><img src={Logo} draggable={false}/></div></Navbar.Brand>  </div>
       <div className='d-inline-flex justify-content-between w-100 fluid m-0 p-1 border-bottom'>
        <div>
         <Navbar.Toggle aria-controls="navbarScroll m-1" onClick={()=> setShow(true)} />
         <Navbar.Collapse id="navbarScroll" >
-          <Nav
-            className="me-auto my-2 my-lg-0 d-none d-lg-block" 
-            style={{ maxHeight: '100px' }} >
-                 <NavDropdown className='m-2 ' 
-                 title="Menu" id="navbarScrollingDropdown" drop='down' style={{zIndex:'4000',position:'relative'}}>
-                 <NavDropdown.Item>
-                 <Nav.Link as={Link} to="/" className='scale-up m-0 rounded-2 p-1' >Home</Nav.Link> 
-                 </NavDropdown.Item>
-                 <NavDropdown className='m-2' title="Categories" id="navbarScrollingDropdown" drop='end' style={{zIndex:'4001',position:'relative'}} alignRight>
-                 <div style={{ maxHeight: '300px', overflowY: 'auto', scrollbarWidth:'auto'}}>
-                   {cat?.map(c => (
-                     <NavDropdown.Item
-                       key={c._id}
-                       onClick={() => navigate(`/category/${c._id}`)  
-                     }>
-                       <div className='btn btn-sm scale-up w-100 m-0 p-1'>
-                       {c.name}
-                       </div>
-                 </NavDropdown.Item>
-                   ))}
-                   </div>
-                 </NavDropdown> 
-                 <NavDropdown.Item ><Nav.Link as={Link} to='/#about' className='scale-up rounded-2 m-0 p-1' >About Us</Nav.Link></NavDropdown.Item>
-                 </NavDropdown> 
-          </Nav>
+        <Nav className="me-auto my-2 my-lg-0 d-none d-lg-flex" style={{ maxHeight: '100px' }}>
+  <NavDropdown
+    className='m-2'
+    title="Menu"
+    id="navbarScrollingDropdown"
+    drop='down'
+    style={{ zIndex: 4000,alignItems:'center'}}
+  >
+    <center><strong>
+      <NavDropdown.Item as={Link} to="/" className='scale-up rounded col-11'>
+    Home
+    </NavDropdown.Item></strong></center>
+    <center><strong>
+   <NavDropdown
+      className='m-2 scale-up'
+      title="Categories"
+      id="navbarScrollingDropdownCategories"
+      drop='end'
+      style={{ zIndex: 4001 }}
+      align="end"
+    >
+      <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+        {cat?.map(c => (
+          <NavDropdown.Item
+            key={c._id}
+            onClick={() => navigate(`/category/${c._id}`)}
+          >
+            <div className='btn btn-sm scale-up w-100 m-0 p-1'>
+              {c.name}
+            </div>
+          </NavDropdown.Item>
+        ))}
+      </div>
+    </NavDropdown></strong></center>
+
+    <center>
+    <NavDropdown.Item as={Link} to='/#about' className='scale-up col-11 rounded '>
+      About Us
+    </NavDropdown.Item></center>
+  </NavDropdown>
+</Nav>
+
           <Nav
             className="me-auto my-2 my-lg-0" 
             style={{ maxHeight: '100px' }} >

@@ -3,7 +3,6 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/Auth';
 import { Link, useNavigate } from 'react-router-dom';
 import img1 from '../assets/candle.jpg';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import WhatsAppLink from '../Components/WhatsappLink';
 import NavBar from '../Components/NavBar';
@@ -57,19 +56,8 @@ const CartPage = () => {
     }
   };
 
-  const getToken = async () => {
-    try {
-      const { data } = await axios.get("/backend/product/payment/token");
-      setCtoken(data?.clientToken);
-     } catch (error) {
-      console.log(error);
-    }
-  };
-
- 
 
   useEffect(() => {
-    getToken();
   }, [auth?.token]);
 
  
@@ -97,7 +85,7 @@ const CartPage = () => {
           {cart?.map(p => (
             <div className=" card flex-row m-1 flex-md-column col-md-3 col-lg-2 m-2 scale-up design" key={p._id}>
               <div className="col-4 col-md-12 p-0 mt-1">
-                <img className='d-flex align-self-center' src={p.profile ?  `/backend/images/${p?.profile?.[0]}` : img1} width={200} alt="img" />
+                <img className='d-flex align-self-center' src={p.profile ? p?.profile?.[0] : img1} width={200} alt="img" />
               </div>
               <div className="col-8 col-md-12 p-0 gap-0 text-md-center">
               <h4 className='m-1'><Link to={`/product/${p._id}`} >{(p.name).substring(0, 14) + "...."}</Link></h4>

@@ -147,11 +147,11 @@ const AddCategory = () => {
             <div className="head">
               <div className="card-title bg-body-secondary d-flex justify-content-between align-items-center px-2 rounded">
                 <h3>Categories</h3>
-                <p>Total Count: <h4 className='text-center'>{cat?.length}</h4></p>
+                <>Total Count: <h4 className='text-center'>{cat?.length}</h4></>
               </div>
               <div className="list-group">
                 {cat?.map(p => (
-                  <p className="list-group-item list-group-item-action d-flex m-0 justify-content-between design" key={p._id}>
+                  <div className="list-group-item list-group-item-action d-flex m-0 justify-content-between design" key={p._id}>
                     <span className='d-flex align-items-center gap-3'>
                       <div className='' style={{ width:'50px',height:'50px',borderRadius:'50%',objectFit:'cover',overflow:'hidden'}}>
                       {p.img && <img src={p.img} alt={p.name} style={{ width: '100%',height:'100%' }} />}
@@ -162,7 +162,7 @@ const AddCategory = () => {
                     <span onClick={() => confirmDelete(p._id)} className='btn btn-outline-danger'>
                       <i className="fa-solid fa-trash"></i>
                     </span>
-                  </p>
+                  </div>
                 ))}
               </div>
             </div>

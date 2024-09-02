@@ -36,7 +36,7 @@ const CategoryProducts = () => {
         <>
             <NavBar />
             { isLoading ? 
-            (<div className='d-flex' style={{overflowX:'auto'}} > {[...Array(6)].map((_,index) => (<div className='col-md-1 col-3'><AvatarSkeleton /> <br /> <ButtonSkeleton /> </div>))}</div>) :
+            (<div className='d-flex' style={{overflowX:'auto'}} > {[...Array(6)].map((_,index) => (<div key={index} className='col-md-1 col-3'><AvatarSkeleton /> <br /> <ButtonSkeleton /> </div>))}</div>) :
             <CategoryScroll />
           }
             <div className="row m-2">
@@ -54,8 +54,8 @@ const CategoryProducts = () => {
                     </div>
                 ) : (
                     <div className="bar d-flex flex-wrap">
-                        {catProducts?.map(product => (
-                            <Product key={product.id} {...product} />
+                        {catProducts?.map((p,index) => (
+                            <Product key={index} {...p} />
                         ))}
                     </div>
                 )}

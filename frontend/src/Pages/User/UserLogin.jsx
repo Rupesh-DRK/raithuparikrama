@@ -6,11 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from '../../Components/NavBar';
 import UserReg from './UserReg';
 import Footer from '../../Components/Footer';
+import { Skeleton } from 'antd';
+import SkeletonButton from 'antd/es/skeleton/Button';
 
 const UserLogin = () => {
     const userRef = useRef(null);
     const passwordRef = useRef(null);
     const [auth, setAuth] = useAuth();
+    const[Loading, setLoading] = useState(false)
     const navigate = useNavigate();
     const location = useLocation();
     
@@ -22,6 +25,7 @@ const UserLogin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const res = await axios.post( "/backend/user/login", {
                 email: userRef.current.value,
@@ -35,6 +39,7 @@ const UserLogin = () => {
             });
             localStorage.setItem("auth", JSON.stringify(res.data));
             navigate(location.state || "/", { replace: true });
+            setLoading(false);
         } catch (err) {
             console.error('Login failed:', err);
         }
@@ -76,7 +81,7 @@ const UserLogin = () => {
                 <Link  to={'/register'}>New User ? Register Here</Link>
                 </div>
                 <div className="d-flex justify-content-center">
-                <button type="submit" className="btn btn-primary btn-sm m-2">Login</button>
+                <button type="submit"  className="btn btn-primary btn-sm m-2">{Loading? "logging in.." :"Login"}</button>
                 <button type="reset" className="btn btn-warning btn-sm m-2">Reset</button>
                 </div>
             </form> 

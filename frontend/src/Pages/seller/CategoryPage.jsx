@@ -120,7 +120,7 @@ const CategoryPage = () => {
 
                 <form className='' onSubmit={addCategory}>
                  { preview && <div className="preview mx-auto border m-2" style={{width:'120px',height:'120px',borderRadius:'50%',overflow:'hidden',objectFit:'cover'}}>
-                    <img src={preview} alt="image" style={{width:'100%',height:'100%'}}/>
+                    <img src={preview} alt="log" style={{width:'100%',height:'100%'}}/>
                   </div>
                   }
                   <div className="d-flex col-md-12 col-sm-10 m-2">
@@ -148,11 +148,11 @@ const CategoryPage = () => {
             <div className="head">
               <div  className="card-title bg-body-secondary d-flex justify-content-between align-items-center px-2 rounded">
                 <h3>Categories</h3>
-                <p>Total Count: <h4 className='text-center'>{cat?.length}</h4></p>
+                <><p>Total Count: </p><h4 className='text-center'>{cat?.length}</h4></>
               </div>
               <div className="list-group">
               {cat?.map(p => (
-                  <p className="list-group-item list-group-item-action d-flex m-0 justify-content-between design" key={p._id}>
+                  <div className="list-group-item list-group-item-action d-flex m-0 justify-content-between design" key={p._id}>
                     <span className='d-flex align-items-center gap-3'>
                       <div className='scale-up design' style={{ width:'50px',height:'50px',borderRadius:'50%',objectFit:'cover',overflow:'hidden'}}>
                       {p.img && <img src={p.img} alt={p.name} style={{ width: '100%',height:'100%' }} />}
@@ -162,7 +162,7 @@ const CategoryPage = () => {
                     <span onClick={() => confirmDelete(p._id)} className='btn btn-outline-danger'>
                       <i className="fa-solid fa-trash"></i>
                     </span>
-                  </p>
+                  </div>
                 ))}
               </div>
             </div>

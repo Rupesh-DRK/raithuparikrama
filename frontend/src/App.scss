@@ -161,9 +161,14 @@
   z-index: 4002;
   overflow: hidden;
   background: rgba(20, 20, 20, 0.95);
+  place-content: center;
+  height: 100vh;
 }
 
 .full-div{
   width: 100rem;
   height: 100rem;
 }
+// *{
+//   border: 1px solid blue;
+// }

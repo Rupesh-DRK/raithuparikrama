@@ -9,8 +9,6 @@ const DashboardPanel = () => {
       <NavLink to="/admin/approvals" className="list-group-item list-group-item-action">Approvals</NavLink>
       <NavLink to="/admin/add" className="list-group-item list-group-item-action">Upload Products</NavLink>
       <NavLink to="/admin/cate" className="list-group-item list-group-item-action"> Categories</NavLink>
-      <NavLink to="/admin/catForm" className="list-group-item list-group-item-action"> Category Form</NavLink>
-      <NavLink to="/admin/newForm" className="list-group-item list-group-item-action"> new Form</NavLink>
     </div>
   </div>
   )

@@ -60,54 +60,76 @@ const ThumbImages = ({ props }) => {
     ) :
     (
     <div className='' >
-      <div className='m-auto col-12 gap-3'  >
+      <div className='m-auto col-11 gap-3 my-3 my-md-0'  >
       <Slider {...settings} >
         {images.map((image, index) => (
-            <center onClick={() => setOpen(true)} >
+            <div className='col-12' key={index} onClick={() => setOpen(true)} style={{objectFit:'contain'}}>
             { image.startsWith('data:video') ?
-            <video controls style={{maxHeight:'45vh',objectFit:'contain',aspectRatio:'4/3'}} className='rounded-3 m-0 p-0 col-12'  onClick={()=>{setOpen(true)}}>
+            <video controls style={{maxHeight:'100%',objectFit:'contain',aspectRatio:'4/3'}} className='rounded-3 m-0 p-0 col-12'  onClick={()=>{setOpen(true)}}>
               <source src={image} type={getType(image)} />
             </video> :
-            <div className='col-12 rounded' style={{maxHeight:'45vh',objectFit:'contain',aspectRatio:'4/3'}}>
-              <img
-            className='rounded-2'
-            style={{objectPosition:'center',maxHeight:'100%',maxWidth:'100%'}}
+            <center>
+              <div className='col-12 rounded' style={{maxHeight:'45vh',objectFit:'contain',aspectRatio:'4/3'}}>
+              <img className='rounded-2'
+            style={{objectPosition:'center',maxHeight:'100%',maxWidth:'auto'}}
               src={image}
               alt={`Thumbnail ${index}`}
             />
             </div>
+            </center>
             }
-          </center>
+          </div>
         ))}
       </Slider>
-
       </div>
 
-      {open && 
-      <div className='fullscreen col-12 h-100' >
-        <h2 className="btn btn-outline-light m-3 " style={{float:'right',fontWeight:'bolder'}} onClick={() => setOpen(false)}><i className="fa-solid fa-x"> </i></h2>
-        <center className='m-3 m-md-5 col-11 col-md-11' style={{height:'90vh',placeContent:'center'}}>
-        <Slider {...settings} autoplay={false}> 
-          {images.map((src,index) => (
-            <center key={index} style={{aspectRatio:'4/3'}}>
-              { src.startsWith('data:video') ?
-            <video controls style={{ aspectRatio: '4/3'}} className='rounded'>
-              <source src={src} type={getType(src)} />
-            </video> :
-            <img
-            className='m-auto'
-            style={{placeContent:'center',objectPosition:'center'}}
-              src={src}
-              alt={""}
-            />
-            }
-            </center>
-          ))}
-        </Slider>
-        </center>
+      {open && (
+          <div
+            className='fullscreen col-12'
+            style={{position: 'fixed',top: 0,left: 0,width: '100%',height: '100%',backgroundColor: 'rgba(0, 0, 0, 0.8)', display: 'flex',alignItems: 'center',justifyContent: 'center',zIndex: 9999 }} >
+            <h2
+            className="btn btn-outline-light"
+            style={{position: 'absolute',top: '20px',right: '20px',fontWeight: 'bolder',cursor: 'pointer',zIndex: 10000 }}
+            onClick={() => setOpen(false)}
+            >
+            <i className="fa-solid fa-x"></i>
+            </h2>
+            <div className='col-12 m-auto col-md-11'
+            style={{ height: '95vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',placeContent:'center'
+            }}
+          >
+            <Slider {...settings} autoplay={false} style={{ width: '100%', maxHeight: '100%' }}>
+              {images.map((src, index) => (
+                <div
+                  key={index}
+                  style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'
+                  }}
+                >
+                  {src.startsWith('data:video') ? (
+                    <center>
+                      <video
+                      controls
+                      style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', aspectRatio: '4/3' 
+                      }} className='rounded col-md-9 col-12' >
+                      <source src={src} type={getType(src)} />
+                    </video>
+                    </center>
+                  ) : (
+                    <center>
+                      <img
+                      src={src}
+                      alt=""
+                      style={{ maxWidth: '100%', maxHeight: '90%', objectFit: 'contain', aspectRatio: '4/3'  }} 
+                      className='rounded col-12 col-md-9' />
+                    </center>
+                  )}
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </div>
+      )}
 
-    </div>
-    }
     </div>
     )}
     </>

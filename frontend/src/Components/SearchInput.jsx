@@ -10,13 +10,21 @@ const SearchInput = () => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const { data } = await axios.get( `/backend/product/search/${values.keyword}`);
+    
+            const trimmedKeyword = values.keyword.trim();
+    
+            if (!trimmedKeyword) {
+                return; 
+            }
+    
+            const { data } = await axios.get(`/backend/product/search/${values.keyword}`);
             setValues({ ...values, results: data });
             navigate("/search");
         } catch (err) {
             console.log(err);
         }
     };
+    
 
     return (
             <form className="d-flex align-items-baseline mx-2" role="search" onSubmit={handleSubmit}>

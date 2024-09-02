@@ -2,29 +2,30 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/Auth';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import NavBar from '../../Components/NavBar';
 
 const UpdateUser = () => {
-  const pf =  "/backend/images/";
   const navigate = useNavigate();
+  const[ Loading, setLoading ] = useState(false)
 const[auth,setAuth]=useAuth()
   const [file, setFile] = useState(null);
 
   const [updateData, setUpdateData] = useState({
-    username: auth.user.username ,
-        email: auth.user.email ,
-        Dob: auth.user.Dob ? new Date(auth.user.Dob).toISOString().split('T')[0] : '',
-        Gender: auth.user.Gender ,
-        mobile: auth.user.mobile ,
-        Alternative_mobile: auth.user.Alternative_mobile,
-        type: auth.user.type,
-        password:auth.user.password,
-        profile: auth.user.profile,
+    username: auth.user.username || '',
+    email: auth.user.email || '',
+    Dob: auth.user.Dob ? new Date(auth.user.Dob).toISOString().split('T')[0] : '',
+    Gender: auth.user.Gender || '',
+    mobile: auth.user.mobile || '',
+    Alternative_mobile: auth.user.Alternative_mobile || '',
+    type: auth.user.type || '',
+    password: auth.user.password || '',
+    profile: auth.user.profile || '',
   });
+  
 
 
   const handleChange = (e) => {
@@ -48,6 +49,7 @@ const[auth,setAuth]=useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.put( `/backend/user/${auth.user._id}`, updateData);
@@ -56,6 +58,7 @@ const[auth,setAuth]=useAuth()
     const newAuth = { ...auth, user: response.data };
     setAuth(newAuth);
     localStorage.setItem('auth', JSON.stringify(newAuth));
+    setLoading(false);
       setTimeout(() => {
         navigate("/");
       }, 2000);
@@ -65,6 +68,7 @@ const[auth,setAuth]=useAuth()
   };
   return (<>
       <NavBar />
+      <h2 className=" me-4" style={{float:'right'}}><Link to="/" className="btn btn-outline-dark"><i className="fa-solid fa-x"> </i></Link></h2>
     <div className="container m-1 d-flex flex-column col-12 mx-auto col-md-6">
       <ToastContainer />
       <h2 className="m-1 text-center">Update Profile</h2>
@@ -165,7 +169,7 @@ const[auth,setAuth]=useAuth()
           />
         </div>
         <div className='d-flex justify-centent-center'>
-        <button type="submit" className="btn btn-primary w-25 mx-auto">Submit</button>
+        <button type="submit" className="btn btn-success w-25 mx-auto">{Loading?"Updating...":"Update"}</button>
         </div>
       </form>
     </div>

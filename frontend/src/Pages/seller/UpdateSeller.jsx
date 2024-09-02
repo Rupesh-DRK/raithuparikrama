@@ -12,14 +12,14 @@ const UpdateSeller = () => {
   const [auth, setAuth] = useAuth();
   const [file, setFile] = useState(null);
   const [updateData, setUpdateData] = useState({
-    userId: auth.user._id,
-    name: auth.user.name,
-    email: auth.user.email,
-    password: auth.user.password,
-    contactInformation: auth.user.contactInformation,
-    address: auth.user.address,
-    paymentInformation: auth.user.paymentInformation,
-    profile: auth.user.profile,
+    userId: auth.user._id || '',
+    name: auth.user.name || '',
+    email: auth.user.email || '',
+    password: auth.user.password || '',
+    contactInformation: auth.user.contactInformation || '',
+    address: auth.user.address || '',
+    paymentInformation: auth.user.paymentInformation || '',
+    profile: auth.user.profile || '',
   });
 
   const handleChange = (e) => {

@@ -107,7 +107,7 @@ export default function Bar() {
         <FaFilter size={30} onClick={showDrawer} /> Filters
       </div>
 
-      <div className="d-flex justify-content-center flex-wrap m-3">
+      <div className="d-flex justify-content-start flex-wrap m-3">
         {isLoading ? (
           [...Array(4)]?.map((_, index) => (
             <ProductSkeleton key={index} />

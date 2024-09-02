@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Register from './Pages/Register';
 import Home from './Pages/Home';
 import Index from './Pages/Index';
@@ -33,8 +33,6 @@ import UploadProducts from './Pages/Admin/UploadProducts';
 import AddCategory from './Pages/Admin/AddCategory';
 import ProductForm from './Pages/Admin/ProductForm';
 import AllSkeletons from './Skeletons/AllSkeletons';
-
-
 
 
 function App() {
@@ -85,7 +83,7 @@ function App() {
     }
   }, [auth.token]);
   return (
-    <div className='app'>
+    <div className='app mx-1'>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/index" element={<Index />} />
