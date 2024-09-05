@@ -49,8 +49,14 @@ export default function Product(props) {
   };
  const image = props?.profile?.[imageIndex()]
 
-
- 
+ const UpdateVisits = async (id) => {
+  const newVisitCount = props.visits + 1;
+  try {
+    const response = await axios.put(`/backend/product/visits/`+id, { visits: newVisitCount });
+  } catch (error) {
+    console.error('Error updating visit count:', error);
+  }
+};
   return (
     <div className="card container scale-up design d-flex flex-column my-3 m-md-2" style={{ maxWidth: '10rem'}}>
       <Toaster position="top-right" />
@@ -66,10 +72,11 @@ export default function Product(props) {
       <div className="card-body p-0 m-0" style={{ fontSize:'12px'}}>
 
         <div className='d-flex flex-column m-1 p-0 gap-0'>
-      <Link to={`/product/${props._id}`} className=" fw-bold text-dark" >
+      <Link to={`/product/${props._id}`} className=" fw-bold text-dark" onClick={()=>UpdateVisits(props._id)}>
         <p className="card-title  p-0 m-0" style={{height:'45px'}}>
           {props.name?.substring(0, 20) + '..'}
         </p>
+        <p>counts.. {props.visits}</p>
         <p className="card-text m-1 p-0">${props.price}</p>
         {auth?.user?.type === 'admin' && (
             (props?.seller?.name) ?

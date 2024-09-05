@@ -7,11 +7,11 @@ import { FaFilter } from 'react-icons/fa';
 import { useCategory, useProducts } from '../middleware/Hooks';
 import { Collapse, Drawer } from 'antd';
 import Product from './Product';
-import ProductSkeleton from '../Skeletons/ProductSkeleton'; // Assume this skeleton exists
+import ProductSkeleton from '../Skeletons/ProductSkeleton'; 
 
 export default function Bar() {
   const { Panel } = Collapse;
-  const [cate, setCate] = useCategory(); // Ensure useCategory returns initial data
+  const [cate, setCate] = useCategory(); 
   const [range, setRange] = useState([10, 5000]);
   const [checked, setChecked] = useState([]);
   const [open, setOpen] = useState(false);

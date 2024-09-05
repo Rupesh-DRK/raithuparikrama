@@ -96,22 +96,25 @@ function NavBar() {
             style={{ maxHeight: '100px' }} >
                  <Drawer title="Menu"  onClose={onClose} open={show} placement="left" width={300} className='d-lg-none'>
                   <div className="list-group flex-column gap-1">
-                 <Link as={Link} to="/" className='scale-up rounded-2 list-group-item' >Home</Link> 
+                 <Link as={Link} to="/index" className='scale-up rounded-2 list-group-item' >Home</Link> 
                  <Accordion className='m-0 p-0' defaultActiveKey="0">
-                  <Accordion.Item eventKey='1'>
-                   <Accordion.Header className='m-0 p-0 '>Categories</Accordion.Header>
-                   <Accordion.Body className='m-0 p-0'>
+                  <Accordion.Item eventKey='0'>
+                   <Accordion.Header className='m-0 p-0' >Categories</Accordion.Header>
+                   <Accordion.Body className='m-0 p-0' >
                         {cat?.map(c => (
                           <Link
                            key={c._id}
                            to={`/category/${c._id}`}
-                           className="list-group-item list-group-item-action p-2"
+                           className="list-group-item list-group-item-action p-2 d-flex align-items-center"
                            onClick={() => {
                             navigate(`/category/${c._id}`) ;
                             setShow(false)
                             }
                            }>
-                           {c.name}
+                           <div className='' style={{ width:'50px',height:'50px',borderRadius:'50%',objectFit:'cover',overflow:'hidden'}}>
+                      {c.img && <img src={c.img} alt={c.name} style={{ width: '100%',height:'100%' }} />}
+                      </div>
+                           <center className='mx-2'>{c.name}</center>
                           </Link>
                            ))
                         }

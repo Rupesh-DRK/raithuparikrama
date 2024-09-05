@@ -29,15 +29,17 @@ const productSchema = new Schema({
         ref:'category',
         required: true
     },
-    // seller: {
-    //     type: Schema.Types.ObjectId || String,
-    //     ref: 'Seller', // Reference to the Seller model
-    //     required: true
-    // },
+
     seller: {
-        type: Schema.Types.Mixed, // Allow any type of data (can be ObjectId or String)
+        type: Schema.Types.Mixed, 
         required: true
     },
+    visits: {
+        type: Number,
+        default: 0,  
+        min: 0,     
+      },
+    
    
 },{ timestamps: true });
 

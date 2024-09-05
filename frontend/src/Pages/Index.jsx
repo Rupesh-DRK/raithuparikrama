@@ -1,48 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import NavBar from '../Components/NavBar'
-import "../App.scss"
-import CategoryScroll from '../Components/CategoryScroll'
-import CarouselWithContent from '../Components/CarouselWithContent'
-import axios from 'axios'
-import ProductsGroupedByCategory from '../Components/ProductsGroupedByCategory'
-
+import React, { useEffect, useState } from 'react';
+import NavBar from '../Components/NavBar';
+import "../App.scss";
+import CategoryScroll from '../Components/CategoryScroll';
+import CarouselWithContent from '../Components/CarouselWithContent';
+import ProductsGroupedByCategory from '../Components/ProductsGroupedByCategory';
+import { useProducts } from '../middleware/Hooks';
+import SkeletonImage from 'antd/es/skeleton/Image';
 
 export default function Index() {
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [products] = useProducts();
+  const [loading, setLoading] = useState(true);
+  const [randomItems, setRandomItems] = useState([]);
 
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(`/backend/product/random?page=${page}&limit=5`);
-      const newProducts = response.data.products;
-      setProducts(() => [ ...newProducts]);
-      setHasMore(newProducts.length > 0);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  };
-  useEffect(() => {
-    fetchProducts();
-  }, [page]);
   const getRandomItems = (array, count) => {
-    const shuffled = array.sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 5);
+    return array.slice(0, count);
   };
-  const randomItems = getRandomItems(products, 4);  
+
+  useEffect(() => {
+    if (products.length > 0) {
+      setLoading(true);
+      const items = getRandomItems(products, 4);
+      setRandomItems(items);
+      setLoading(false);
+    }
+  }, [products]);
+
   return (
     <div className='index d-block'>
-      <NavBar/>
-      <CategoryScroll />
+      <NavBar />
+      <div className='d-none d-md-block'><CategoryScroll /></div>
       <div className=''>
-     { randomItems && <CarouselWithContent slides={randomItems}/>}
+        {loading ? (
+          <center>
+            <div className='col-12 border rounded' style={{height:'40vh',placeContent:'center'}}>
+              <SkeletonImage className='m-auto'/>
+            </div>
+          </center>
+        ) : (
+          randomItems && <CarouselWithContent slides={randomItems} />
+        )}
+      </div>
+      <ProductsGroupedByCategory />
     </div>
-    <ProductsGroupedByCategory />
-
-    
-   
-    </div>
-
-
-  )
+  );
 }

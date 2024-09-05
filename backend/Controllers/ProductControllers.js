@@ -122,9 +122,6 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-
-
-
 export const searchProductController = async (req, res) => {
     try {
         const { keyword } = req.params;
@@ -167,15 +164,39 @@ export const getProductByCategory = async () =>{
 
 
 
-export const getProducts = async (req, res) => {
+export const getProductsByVisits = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort({ visits: -1 });
     res.status(200).json(products);
   } catch (error) {
     res.status(400).send({
-      error: error.message
+      error: error.message,
     });
   }
 };
 
 
+
+export const updateProductVisits = async (req, res) => {
+  const productId = req.params.id;
+  console.log('prod id...',productId);
+  const { visits } = req.body;  
+  if (typeof visits !== 'number') {
+    return res.status(400).json({ error: 'Invalid visits value. It should be a number.' });
+  }  
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      { $set: { visits } },  
+      { new: true, runValidators: true }  
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+    res.json({ message: ' Product counter updated successfully ', product: updatedProduct });
+  } catch (error) {
+    console.error(' Error updating product counter: ', error);
+    res.status(500).json({ error: ' Internal server error ' });
+  }
+};
