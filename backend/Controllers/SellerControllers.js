@@ -120,3 +120,23 @@ export const disapproveSeller = async (req,res) => {
   );
   res.status(200).json(result);
  }
+
+ export const notify = async (req,res) => {
+  const {id} = req.param
+  const { status } = req.body;
+  if (!["yes", "no"].includes(status)) {
+    return res.status(400).json({ message: "Invalid approval status" });
+  }
+
+  const result = await Seller.findByIdAndUpdate(
+    id,
+    { $set: { status } },
+    { new: true }
+  );
+
+  if (!result) {
+    return res.status(404).json({ message: "Seller not found" });
+  }
+
+  res.status(200).json(result);
+};

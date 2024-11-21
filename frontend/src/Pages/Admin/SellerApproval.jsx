@@ -33,12 +33,20 @@ const SellerApproval = () => {
         
         try {
             await axios.post(`/backend/seller/approve/${id}`);
-            fetchSellers()
+            fetchSellers();
             
         } catch (error) {
             console.log(error);
         }
     };
+    const notifyApproval = async(id,status) => {
+        try {
+            await axios.post(`/backend/seller/notifi-approval/${id}`,{notify:status});
+            fetchSellers();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>
@@ -56,6 +64,7 @@ const SellerApproval = () => {
                     <th>Email</th>
                     <th>Status</th>
                     <th>Accept/Reject</th>
+                    <th> Notify ? </th>
                     
                 </tr>
              </thead>
@@ -70,6 +79,17 @@ const SellerApproval = () => {
                         <button  className='btn btn-danger w-100'type='button' onClick={() => disapproveSeller(seller._id)}>Dissapprove</button> :
                          <button className='btn btn-success w-100' type='button' onClick={() => approveSeller(seller._id)} >Approve</button> }
                          </td>
+
+                        <td>
+                            {seller.notify === "yes" ?
+                            <center>
+                        <button  className='btn btn-danger w-100'type='button' onClick={() => notifyApproval(seller._id,'no')}> X </button> :
+                            </center> :
+                            <center>
+                                <button className='btn btn-success w-100' type='button' onClick={() => notifyApproval(seller._id,'yes')} > yes </button>
+                            </center>
+                            }
+                        </td>
                          <td>{seller.password}</td>
                         
                         

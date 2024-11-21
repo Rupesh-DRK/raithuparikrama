@@ -147,7 +147,7 @@ const SingleProduct = () => {
                   >
                     Add To Cart
                   </Button>
-                  <WhatsAppLink  phoneNumber={8520010807} message={message} />
+                  <WhatsAppLink  phoneNumber={post.seller.notify === 'yes' ? post.seller.mobile : 6281429935} message={message} />
                 </div>
               </div>
             </div>

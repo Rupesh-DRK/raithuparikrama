@@ -1,5 +1,5 @@
 import express from 'express';
-import { addSeller, loginSeller, getSeller, updateSeller, getAllSellers, approveSeller, disapproveSeller } from '../Controllers/SellerControllers.js';
+import { addSeller, loginSeller, getSeller, updateSeller, getAllSellers, approveSeller, disapproveSeller, notify } from '../Controllers/SellerControllers.js';
 import { requireSignIn , isSeller} from "../middleware/AuthMiddleware.js"
  
 const router = express.Router();
@@ -14,5 +14,6 @@ router.get("/seller-auth", requireSignIn, isSeller, (req, res) => {
 router.get("/allSellers", getAllSellers);
 router.post('/approve/:id',approveSeller);
 router.post('/disapprove/:id',disapproveSeller);
+router.post('/notifi-approval/:id',notify);
 
 export default router;

@@ -103,7 +103,7 @@ export default function Product(props) {
           <button type="button" className="btn btn-sm btn-success w-100 m-2" style={{height:'30px'}} onClick={addToCart} > to Cart </button>   
         }
         <span className='w-50 d-flex justify-content-center ' style={{height:'40px'}}>
-                <WhatsAppLink phoneNumber={8520010807} message={message}  />
+                <WhatsAppLink phoneNumber={props.seller.notify === 'yes' ? props.seller.mobile : 6281429935} message={message}  />
         </span>
         </div>
       

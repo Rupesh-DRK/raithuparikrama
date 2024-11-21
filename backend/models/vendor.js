@@ -47,7 +47,12 @@ const sellerSchema = new Schema({
     registrationDate: {
         type: Date,
         default: Date.now
-    }
+    },
+    notify : {
+        type:String,
+        enum :['yes','no'],
+        default: 'no'
+    },
 });
 
 // Create Seller model
