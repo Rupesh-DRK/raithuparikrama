@@ -13,9 +13,17 @@ export default function Product(props) {
   const [cart, setCart] = useCart();
   const [averageRating, setAverageRating] = useState(0);
   const location = useLocation();
-  
-  
+  const [itemsSeller, setItemSeller] = useState();
+    
   useEffect(() => {
+    const fetchProductSeller = async () =>{
+      try {
+        const productSeller = await axios.get(`/backend/seller/getSeller/${props.seller}`)
+        setItemSeller(productSeller.data)
+      } catch (error) {
+        
+      }
+    }
     const fetchAverageRating = async () => {
       try {
         const response = await axios.get(`/backend/review/average-rating/${props._id}`);
@@ -25,7 +33,8 @@ export default function Product(props) {
       }
     };
     fetchAverageRating();
-  }, [props._id]);
+    fetchProductSeller();
+  }, [props._id,itemsSeller]);
 
   const addToCart = () => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -103,7 +112,7 @@ export default function Product(props) {
           <button type="button" className="btn btn-sm btn-success w-100 m-2" style={{height:'30px'}} onClick={addToCart} > to Cart </button>   
         }
         <span className='w-50 d-flex justify-content-center ' style={{height:'40px'}}>
-                <WhatsAppLink phoneNumber={props.seller.notify === 'yes' ? props.seller.mobile : 6281429935} message={message}  />
+                <WhatsAppLink phoneNumber={itemsSeller?.notify === 'yes' ? itemsSeller.contactInformation : 6281429935} message={message}  />
         </span>
         </div>
       

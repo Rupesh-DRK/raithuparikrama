@@ -29,6 +29,7 @@ const SingleProduct = () => {
   const [auth] = useAuth();
   const [category] = useCategory();
   const [prodLoading, setProductLoading] = useState(true);
+  const [itemSeller, setItemSeller] = useState();
 
   const addToCart = (post) => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -44,18 +45,21 @@ const SingleProduct = () => {
     setCart(storedCart);
     toast.success("Added to Cart successfully");
   };
+ 
 
   const fetchData = async () => {
     try {
       const productResponse = await axios.get(`/backend/product/${path}`);
       setPost(productResponse.data);
+      const ramu = await axios.get(`/backend/seller/getSeller/${productResponse.data?.seller}`);
+      setItemSeller(ramu.data)
       setCat(productResponse.data.category);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
     }
   };
-
+ 
   const fetchCat = async () => {
     try {
       setProductLoading(true);
@@ -69,10 +73,11 @@ const SingleProduct = () => {
 
   useEffect(() => {
     fetchData();
+
     if (cat) {
     fetchCat();
     }
-  }, [path, auth.user, cat]);
+  }, [path, auth.user,cat]);
 
   const productLink = `${window.location.origin}/product/${post._id}`;
   const message = `Check out this product: ${post.name}\nPrice: $${post.price}\nProduct's Link: ${productLink}`;
@@ -147,7 +152,7 @@ const SingleProduct = () => {
                   >
                     Add To Cart
                   </Button>
-                  <WhatsAppLink  phoneNumber={post.seller.notify === 'yes' ? post.seller.mobile : 6281429935} message={message} />
+                  <WhatsAppLink  phoneNumber={itemSeller?.notify === 'yes' ? itemSeller.contactInformation : 6281429935} message={message} />
                 </div>
               </div>
             </div>

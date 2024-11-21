@@ -57,7 +57,7 @@ export const loginSeller = async (req, res) => {
 
 export const getSeller = async (req, res) => {
   try {
-    const sellerId = req.body._id;
+    const sellerId =  req.params.id || req.body.id;
     const seller = await Seller.findById(sellerId);
     if (!seller) {
       return res.status(404).json({ error: 'Seller not found' });
@@ -120,23 +120,24 @@ export const disapproveSeller = async (req,res) => {
   );
   res.status(200).json(result);
  }
-
- export const notify = async (req,res) => {
-  const {id} = req.param
-  const { status } = req.body;
-  if (!["yes", "no"].includes(status)) {
-    return res.status(400).json({ message: "Invalid approval status" });
-  }
-
-  const result = await Seller.findByIdAndUpdate(
-    id,
-    { $set: { status } },
-    { new: true }
+ 
+ export const notifyApproval = async (req,res) => {
+  const {id} = req.params;
+  const notify = {notify : "yes"}
+  const result = await Seller.findByIdAndUpdate(id,
+   {$set : notify},
+   { new : true}
   );
-
-  if (!result) {
-    return res.status(404).json({ message: "Seller not found" });
-  }
-
   res.status(200).json(result);
-};
+ }
+ 
+ export const notifyDisapproval = async (req,res) => {
+   const {id} = req.params;
+   const notify = {notify : "no"}
+   const result = await Seller.findByIdAndUpdate(id,
+    {$set : notify},
+    { new : true}
+   );
+   console.log(result)
+   res.status(200).json(result);
+  }

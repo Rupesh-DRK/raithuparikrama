@@ -39,14 +39,24 @@ const SellerApproval = () => {
             console.log(error);
         }
     };
-    const notifyApproval = async(id,status) => {
+
+    const notifyDispproval = async (id) => {  
         try {
-            await axios.post(`/backend/seller/notifi-approval/${id}`,{notify:status});
+            await axios.post(`/backend/seller/notify-disapproval/${id}`);
+            fetchSellers();   
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const notifyApproval = async (id) => {   
+        try {
+            await axios.post(`/backend/seller/notify-approval/${id}`);
             fetchSellers();
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+    
 
     return (
         <>
@@ -76,18 +86,15 @@ const SellerApproval = () => {
                         <td>{seller.email}</td>
                         <td>{seller.approval}</td>
                         <td> { seller.approval === "approved" ? 
-                        <button  className='btn btn-danger w-100'type='button' onClick={() => disapproveSeller(seller._id)}>Dissapprove</button> :
-                         <button className='btn btn-success w-100' type='button' onClick={() => approveSeller(seller._id)} >Approve</button> }
+                        <button  className='btn btn-sm btn-danger w-100'type='button' onClick={() => disapproveSeller(seller._id)}>Dissapprove</button> :
+                         <button className='btn btn-sm btn-success w-100' type='button' onClick={() => approveSeller(seller._id)} >Approve</button> }
                          </td>
 
                         <td>
                             {seller.notify === "yes" ?
-                            <center>
-                        <button  className='btn btn-danger w-100'type='button' onClick={() => notifyApproval(seller._id,'no')}> X </button> :
-                            </center> :
-                            <center>
-                                <button className='btn btn-success w-100' type='button' onClick={() => notifyApproval(seller._id,'yes')} > yes </button>
-                            </center>
+                        <button  className='btn-sm  btn btn-danger w-100' type='button' onClick={() => notifyDispproval(seller._id)}> NO </button>
+                            :                                
+                        <button className='btn btn-sm btn-success w-100' type='button' onClick={() => notifyApproval(seller._id)} > YES </button>
                             }
                         </td>
                          <td>{seller.password}</td>
