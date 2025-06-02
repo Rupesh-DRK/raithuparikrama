@@ -32,8 +32,8 @@ app.use('/backend/category', cateRoute);
 app.use('/backend/counter', countRoute);
 app.use('/backend/admin', AdminRoute);
 
-const url = process.env.DB_URL;
-
+// const url = process.env.DB_URL;
+const url = "mongodb+srv://rupesh:rupesh@toolscom.lmmwne2.mongodb.net/?retryWrites=true&w=majority&appName=toolscom"
 mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
